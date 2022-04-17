@@ -15,5 +15,6 @@ namespace Ropey_DvDs_Group_CW.DBContext
         {
             base.OnModelCreating(builder);
         }
+        //public DbSet<Ropey_DvDs_Group_CW.Models.UserRegisterModel> UserRegisterModel { get; set; }
     }
 }

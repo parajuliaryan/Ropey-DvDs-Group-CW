@@ -85,7 +85,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register([FromBody] UserRegisterModel model)
+        public async Task<IActionResult> Register( UserRegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
@@ -124,6 +124,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 UserName = model.Username
             };
             var result = await _userManager.CreateAsync(user, model.Password);
+            
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 

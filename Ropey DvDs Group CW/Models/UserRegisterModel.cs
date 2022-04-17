@@ -4,6 +4,8 @@ namespace Ropey_DvDs_Group_CW.Models
 {
     public class UserRegisterModel
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }
 
