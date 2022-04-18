@@ -1,12 +1,18 @@
-﻿namespace Ropey_DvDs_Group_CW.Models
+﻿using System.ComponentModel.DataAnnotations;
+namespace Ropey_DvDs_Group_CW.Models
 {
     public class DVDCategoryModel
     {
-        public int CategoryNumber { get; set; }
+        [Key]
+        public int CategoryNumber
+        {
+            get; set;
+        }
+        public string? CategoryDescription
+        {
+            get; set;
+        }
 
-        public string? CategoryDescription { get; set; }
-
-        public bool AgeRestricted { get; set; }
-
+        public ICollection<DVDTitleModel> DVDTitles { get; set; }
     }
 }
