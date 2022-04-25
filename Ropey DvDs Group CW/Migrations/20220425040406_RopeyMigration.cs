@@ -23,7 +23,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     table.PrimaryKey("PK_ActorModel", x => x.ActorNumber);
                 });
 
-            /*
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -37,9 +36,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                 });
-            */
-
-            /*
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -65,7 +61,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
-            */
 
             migrationBuilder.CreateTable(
                 name: "DVDCategoryModel",
@@ -134,7 +129,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     table.PrimaryKey("PK_StudioModel", x => x.StudioNumber);
                 });
 
-            /*
             migrationBuilder.CreateTable(
                 name: "UserRegisterModel",
                 columns: table => new
@@ -211,9 +205,7 @@ namespace Ropey_DvDs_Group_CW.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            */
 
-            /*
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
@@ -237,7 +229,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
@@ -258,7 +249,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-            */
 
             migrationBuilder.CreateTable(
                 name: "MemberModel",
@@ -402,8 +392,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            /*
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -442,7 +430,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
-            */
 
             migrationBuilder.CreateIndex(
                 name: "IX_CastMemberModel_ActorNumber",
@@ -497,7 +484,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            /*
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -512,7 +498,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-            */
 
             migrationBuilder.DropTable(
                 name: "CastMemberModel");
@@ -520,7 +505,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
             migrationBuilder.DropTable(
                 name: "LoanModel");
 
-            /*
             migrationBuilder.DropTable(
                 name: "UserRegisterModel");
 
@@ -529,7 +513,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-            */
 
             migrationBuilder.DropTable(
                 name: "ActorModel");

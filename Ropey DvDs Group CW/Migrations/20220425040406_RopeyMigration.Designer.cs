@@ -12,7 +12,7 @@ using Ropey_DvDs_Group_CW.DBContext;
 namespace Ropey_DvDs_Group_CW.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20220418071626_RopeyMigration")]
+    [Migration("20220425040406_RopeyMigration")]
     partial class RopeyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
