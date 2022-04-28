@@ -15,5 +15,6 @@ namespace Ropey_DvDs_Group_CW.Models
 
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
+
     }
 }

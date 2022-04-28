@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Ropey_DvDs_Group_CW.Models.DVDTitleModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form>
+    <input type="text" placeholder="Enter actor last name"/>
+    <button type="submit" class=" btn btn-primary">View DvDs of the actor</button>
+</form>
+<form>
+    <input type="text" placeholder="Enter actor last name"/>
+    <button type="submit" class="btn btn-primary">View Copies too</button>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DVDCategoryModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StudioModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProducerModel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DVDTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateReleased)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StandardCharge)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PenaltyCharge)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DVDCategoryModel.CategoryNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudioModel.StudioNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProducerModel.ProducerNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DVDTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateReleased)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StandardCharge)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PenaltyCharge)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.DVDNumber">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.DVDNumber">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.DVDNumber">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
