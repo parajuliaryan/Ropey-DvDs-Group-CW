@@ -30,9 +30,11 @@ namespace Ropey_DvDs_Group_CW.Controllers
             return View();
         }
 
-        public IActionResult UserDetails()
+        public IActionResult UserDetails(UserDetailsViewModel userDetails)
         {
-            return View();
+            //Retrieving Token Cookies and Send them through ViewBag
+            //ViewBag.token = Request.Cookies["token"];
+            return View(userDetails);
         }
 
         // GET: Authentication/Login
@@ -71,8 +73,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
                     Token = new JwtSecurityTokenHandler().WriteToken(token),
                     Expiration = token.ValidTo
                 };
-                ViewBag.User = userDetails;
-                return RedirectToAction("UserDetails", ViewBag.User);
+
+                //Using Cookies to store Login Data
+                CookieOptions loginCookies = new CookieOptions();
+                loginCookies.Expires = userDetails.Expiration;
+                Response.Cookies.Append("Token", userDetails.Token);
+
+                //Sending the Model to UserDetails Function
+                return RedirectToAction("UserDetails", userDetails);
             }
             return RedirectToAction("UnauthorizedAccess");
         }
