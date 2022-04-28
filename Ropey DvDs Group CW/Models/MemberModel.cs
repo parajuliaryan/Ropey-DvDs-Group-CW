@@ -10,7 +10,7 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public int MembershipCategoryNumber { get; set; }
         [ForeignKey("MembershipCategoryNumber")]
-        public MembershipCategoryModel membershipCategoryModel { get; set; }
+        public MembershipCategoryModel? membershipCategoryModel { get; set; }
 
         public string? MemberLastName { get; set; }
 
@@ -20,7 +20,7 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public DateTime MemberDateOfBirth { get; set; }
 
-        public ICollection<LoanModel> LoanModels { get; set; }
+        public ICollection<LoanModel>? LoanModels { get; set; }
 
     }
 }
