@@ -79,8 +79,17 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 loginCookies.Expires = userDetails.Expiration;
                 Response.Cookies.Append("Token", userDetails.Token);
 
-                //Sending the Model to UserDetails Function
-                return RedirectToAction("UserDetails", userDetails);
+                if (userRoles.Contains("Admin"))
+                {
+                    return RedirectToAction("Index", "AdminDashboard");
+                }
+                else
+                {
+                    //Sending the Model to UserDetails Function
+                    return RedirectToAction("UserDetails", userDetails);
+                }
+
+                
             }
             return RedirectToAction("UnauthorizedAccess");
         }
