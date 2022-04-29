@@ -11,7 +11,7 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public int LoanDuration { get; set; }
 
-        public ICollection<LoanModel> Loans { get; set; }
+        public ICollection<LoanModel>? Loans { get; set; }
 
     }
 }

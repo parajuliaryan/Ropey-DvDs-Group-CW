@@ -11,7 +11,7 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public int MembershipCategoryTotalLoan { get; set; }
 
-        public ICollection<MemberModel> Members { get; set; }
+        public ICollection<MemberModel>? Members { get; set; }
 
     }
 }

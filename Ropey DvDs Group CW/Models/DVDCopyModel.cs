@@ -10,10 +10,10 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public int DVDNumber { get; set; }
         [ForeignKey("DVDNumber")]
-        public DVDTitleModel DVDTitleModel { get; set; }
+        public DVDTitleModel? DVDTitleModel { get; set; }
         public DateTime DatePurchased { get; set; }
 
-        public ICollection<LoanModel> Loans { get; set; }
+        public ICollection<LoanModel>? Loans { get; set; }
 
     }
 }

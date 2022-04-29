@@ -10,13 +10,13 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public int LoanTypeNumber { get; set; }
         [ForeignKey("LoanTypeNumber")]
-        public LoanTypeModel LoanTypeModel { get; set; }
+        public LoanTypeModel? LoanTypeModel { get; set; }
         public int CopyNumber { get; set; }
         [ForeignKey("CopyNumber")]
-        public DVDCopyModel DVDCopyModel { get; set; }
+        public DVDCopyModel? DVDCopyModel { get; set; }
         public int MemberNumber { get; set; }
         [ForeignKey("MemberNumber")]
-        public MemberModel MemberModel { get; set; }
+        public MemberModel? MemberModel { get; set; }
         public DateTime DateOut { get; set; }
 
         public DateTime DateDue { get; set; }

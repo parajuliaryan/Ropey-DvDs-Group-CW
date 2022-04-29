@@ -1,7 +1,18 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
+ ViewData["Title"] = "Dashboard";
 }
 
-<h1>Admin Dashboard</h1>
+<ul>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">Actors</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDCategory" asp-action="Index">DvD Categories</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="CastMembers" asp-action="Index">Cast Members</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDCopy" asp-action="Index">DvD Copies</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="Index">DvDs</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="LoanTypes" asp-action="Index">Loan Types</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Index">Loans</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="MembershipCategory" asp-action="Index">Membership Category</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Members</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="Producers" asp-action="Index">Producers</a></li>
+	<li><a class="nav-link text-dark" asp-area="" asp-controller="Studio" asp-action="Index">Studios</a></li>
+</ul>

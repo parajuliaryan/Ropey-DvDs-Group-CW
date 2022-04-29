@@ -9,6 +9,6 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public string? StudioName { get; set; }  
 
-        public ICollection<DVDTitleModel> DVDTitles { get; set; }
+        public ICollection<DVDTitleModel>? DVDTitles { get; set; }
     }
 }
