@@ -1,0 +1,51 @@
+﻿@*@model IEnumerable<Ropey_DvDs_Group_CW.Models.DVDTitleModel>*@
+
+@{
+    ViewData["Title"] = "DVDDetailsIndex";
+}
+
+<h1>DVDDetailsIndex</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            
+            <th>
+                Category
+            </th>
+            <th>
+                Studio
+            </th>
+            <th>
+                Producer
+            </th>
+            <th>
+                Cast
+            </th>
+            <th>
+                Released On
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+           
+            <td>@item.Title</td>
+            
+            <td>@item.Category</td>
+            <td>@item.Studio</td>
+            <td>@item.Producer</td>
+                <td>@foreach(var value in item.Cast)
+                    {
+                        <p>@value</p>
+                    }
+                </td>
+            <td>@item.Release</td>
+        </tr>
+}
+    </tbody>
+</table>
