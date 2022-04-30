@@ -12,7 +12,7 @@ using Ropey_DvDs_Group_CW.DBContext;
 namespace Ropey_DvDs_Group_CW.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20220425040406_RopeyMigration")]
+    [Migration("20220430093614_RopeyMigration")]
     partial class RopeyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,6 +272,9 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryNumber"), 1L, 1);
 
+                    b.Property<bool>("AgeRestricted")
+                        .HasColumnType("bit");
+
                     b.Property<string>("CategoryDescription")
                         .HasColumnType("nvarchar(max)");
 
@@ -476,31 +479,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     b.HasKey("StudioNumber");
 
                     b.ToTable("StudioModel");
-                });
-
-            modelBuilder.Entity("Ropey_DvDs_Group_CW.Models.UserRegisterModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRegisterModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

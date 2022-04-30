@@ -13,6 +13,11 @@ namespace Ropey_DvDs_Group_CW.Models
             get; set;
         }
 
+        public bool AgeRestricted
+        {
+            get; set;
+        }
+
         public ICollection<DVDTitleModel>? DVDTitles { get; set; }
     }
 }

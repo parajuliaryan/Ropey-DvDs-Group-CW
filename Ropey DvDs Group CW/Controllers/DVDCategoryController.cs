@@ -55,7 +55,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryNumber,CategoryDescription")] DVDCategoryModel dVDCategoryModel)
+        public async Task<IActionResult> Create([Bind("CategoryNumber,CategoryDescription,AgeRestricted")] DVDCategoryModel dVDCategoryModel)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryNumber,CategoryDescription")] DVDCategoryModel dVDCategoryModel)
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryNumber,CategoryDescription,AgeRestricted")] DVDCategoryModel dVDCategoryModel)
         {
             if (id != dVDCategoryModel.CategoryNumber)
             {

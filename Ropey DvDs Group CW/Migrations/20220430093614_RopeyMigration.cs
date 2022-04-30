@@ -68,7 +68,8 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 {
                     CategoryNumber = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CategoryDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgeRestricted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,21 +128,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StudioModel", x => x.StudioNumber);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserRegisterModel",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRegisterModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -504,9 +490,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
             migrationBuilder.DropTable(
                 name: "LoanModel");
-
-            migrationBuilder.DropTable(
-                name: "UserRegisterModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.CategoryDescription)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AgeRestricted)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -23,6 +26,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AgeRestricted)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.CategoryNumber">Edit</a> |
