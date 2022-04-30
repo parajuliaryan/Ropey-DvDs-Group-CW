@@ -359,7 +359,7 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     b.Property<DateTime>("DateOut")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateReturned")
+                    b.Property<DateTime?>("DateReturned")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("LoanTypeNumber")

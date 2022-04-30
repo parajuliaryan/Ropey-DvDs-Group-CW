@@ -353,7 +353,7 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     MemberNumber = table.Column<int>(type: "int", nullable: false),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateDue = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
