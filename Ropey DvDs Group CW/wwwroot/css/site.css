@@ -1,18 +1,45 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #00b0b121;
+    color: #023b3b;
 }
+
+.bg-white {
+    --bs-bg-opacity: 1;
+    background-color: #00b0b1 !important;
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.navbar-light .navbar-brand {
+    color: white !important;
+}
+
+.btn-primary {
+    background-color: #00b0b1;
+    border-color: #00b0b1;
+}
+
+    .btn-primary:hover {
+        background-color: white;
+        border-color: #00b0b1;
+        color: #00b0b1;
+    }
+/**/
