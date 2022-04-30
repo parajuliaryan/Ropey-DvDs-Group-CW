@@ -170,5 +170,28 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             return _context.DVDTitleModel.Any(e => e.DVDNumber == id);
         }
+
+        public async Task<IActionResult> DVDDetailsIndex()
+        {
+            var data = from dvdtitle in _context.DVDTitleModel
+                       join dvdcategory in _context.DVDCategoryModel on dvdtitle.CategoryNumber equals dvdcategory.CategoryNumber
+                       join studio in _context.StudioModel on dvdtitle.StudioNumber equals studio.StudioNumber
+                       orderby dvdtitle.DateReleased
+                       select new
+                       {
+                          Title = dvdtitle.DVDTitle,
+                           Category = dvdcategory.CategoryDescription,
+                           Studio = studio.StudioName,
+                           Producer = dvdtitle.ProducerModel.ProducerName,
+                           Cast = from casts in dvdtitle.CastMembers
+                                  join actor in _context.ActorModel on casts.ActorNumber equals actor.ActorNumber                                  
+                                  group actor by new { casts.DVDNumber } into g
+                                  select
+                                       String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
+                           Release = dvdtitle.DateReleased.ToString("dd MMM yyyy"),
+                       };
+            data.OrderBy(c => c.Cast);
+            return View(data);
+        }
     }
 }
