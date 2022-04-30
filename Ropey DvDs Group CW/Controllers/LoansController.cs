@@ -52,8 +52,8 @@ namespace Ropey_DvDs_Group_CW.Controllers
         public IActionResult Create()
         {
             ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber");
-            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber");
-            ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber");
+            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
+            ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberFirstName");
             return View();
         }
 

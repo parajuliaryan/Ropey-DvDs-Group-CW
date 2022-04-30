@@ -130,21 +130,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserRegisterModel",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRegisterModel", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -367,7 +352,7 @@ namespace Ropey_DvDs_Group_CW.Migrations
                     MemberNumber = table.Column<int>(type: "int", nullable: false),
                     DateOut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateDue = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateReturned = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -504,9 +489,6 @@ namespace Ropey_DvDs_Group_CW.Migrations
 
             migrationBuilder.DropTable(
                 name: "LoanModel");
-
-            migrationBuilder.DropTable(
-                name: "UserRegisterModel");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
