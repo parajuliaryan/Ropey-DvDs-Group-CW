@@ -23,7 +23,22 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
-            var applicationDBContext = _context.MemberModel.Include(m => m.membershipCategoryModel);
+            var applicationDBContext = from members in _context.MemberModel
+                                       join membership in _context.MembershipCategoryModel on members.MembershipCategoryNumber equals membership.MembershipCategoryNumber
+                                       select new
+                                       {
+                                           MemberNumber = members.MemberNumber,
+                                           MemberFirstName = members.MemberFirstName,
+                                           MemberLastName = members.MemberLastName,
+                                           MemberAddress = members.MemberAddress,
+                                           MemberDOB = members.MemberDateOfBirth,
+                                           Membership = membership.MembershipCategoryDescription,
+                                           TotalAcceptLoans = membership.MembershipCategoryTotalLoan,
+                                           TotalCurrentLoans = (from loans in _context.LoanModel
+                                                                where loans.DateReturned == null
+                                                                where loans.MemberNumber == members.MemberNumber
+                                                                select loans).Count(),
+                                       };
             return View(await applicationDBContext.ToListAsync());
         }
 
