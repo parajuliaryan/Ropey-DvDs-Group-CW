@@ -11,18 +11,53 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DVDTitleModel)
+            DVD Number
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DVDTitleModel.DVDNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DatePurchased)
+            DVD Title
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DVDTitleModel.DVDTitle)
+        </dd>
+        <dt class = "col-sm-2">
+            DVD Copy Purchased On
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DatePurchased)
         </dd>
+        <hr/>
+        @if (ViewBag.lastLoanMemberName != null)
+        {
+            <dt class = "col-sm-2">
+            Last Loaned By
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.lastLoanMemberName
+        </dd>
+        <dt class = "col-sm-2">
+            Loaned On
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.loanData.DateOut
+        </dd>
+        <dt class = "col-sm-2">
+            Loan Due On 
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.loanData.DateDue
+        </dd>
+        <dt class = "col-sm-2">
+            Returned On
+        </dt>
+        <dd class = "col-sm-10">
+            @(ViewBag.loanData.DateReturned ?? "Not Returned Yet")
+        </dd>
+        }
     </dl>
+    
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.CopyNumber">Edit</a> |

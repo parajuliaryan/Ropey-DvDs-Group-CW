@@ -39,6 +39,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 .Include(l => l.DVDCopyModel)
                 .Include(l => l.LoanTypeModel)
                 .Include(l => l.MemberModel)
+             
                 .FirstOrDefaultAsync(m => m.LoanNumber == id);
             if (loanModel == null)
             {
@@ -168,6 +169,11 @@ namespace Ropey_DvDs_Group_CW.Controllers
         private bool LoanModelExists(int id)
         {
             return _context.LoanModel.Any(e => e.LoanNumber == id);
+        }
+
+        public void onChangeCopyDropDown()
+        {
+            Console.WriteLine();
         }
     }
 }

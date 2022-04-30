@@ -43,6 +43,21 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 return NotFound();
             }
 
+            var latestLoan = from loan in _context.LoanModel          
+                             join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
+                                     where loan.CopyNumber == id
+                                     orderby loan.DateOut descending                                     
+                                     select new {
+                                         MemberName = member.MemberFirstName + " " + member.MemberLastName,
+                                         Loan = loan
+                                        };
+            var data = latestLoan.FirstOrDefault();
+            if(data != null)
+            {
+                ViewData["loanData"] = data.Loan;
+                ViewData["lastLoanMemberName"] = data.MemberName;
+            }       
+            
             return View(dVDCopyModel);
         }
 
