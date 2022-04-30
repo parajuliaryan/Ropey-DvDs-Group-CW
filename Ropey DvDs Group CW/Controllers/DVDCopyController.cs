@@ -49,7 +49,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // GET: DVDCopy/Create
         public IActionResult Create()
         {
-            ViewData["DVDNumber"] = new SelectList(_context.DVDTitleModel, "DVDNumber", "DVDNumber");
+            ViewData["DVDNumber"] = new SelectList(_context.DVDTitleModel, "DVDNumber", "DVDTitle");
             return View();
         }
 

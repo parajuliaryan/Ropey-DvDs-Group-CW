@@ -193,5 +193,60 @@ namespace Ropey_DvDs_Group_CW.Controllers
             data.OrderBy(c => c.Cast);
             return View(data);
         }
+
+        public async Task<IActionResult> SelectActors(ActorModel actorModel)
+        {
+            ViewData["ActorSurname"] = new SelectList(_context.Set<ActorModel>(), "ActorSurname", "ActorSurname", actorModel.ActorSurname);
+            return View();
+        }
+
+        public async Task<IActionResult> ShowDVDsofActors()
+        {
+            string actorName = Request.Form["actorList"] .ToString();
+            var data = from castmembers in _context.CastMemberModel
+                       join actor in _context.ActorModel on castmembers.ActorNumber equals actor.ActorNumber
+                       where actor.ActorSurname == actorName join dvdtitle in _context.DVDTitleModel
+                       on castmembers.DVDNumber equals dvdtitle.DVDNumber
+                       select new
+                       {
+                           Title = dvdtitle.DVDTitle,
+                           Cast = from casts in dvdtitle.CastMembers
+                                  join actor in _context.ActorModel on casts.ActorNumber equals actor.ActorNumber
+                                  group actor by new { casts.DVDNumber } into g
+                                  select
+                                       String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
+                       }
+                       ;
+            return View(data);
+        }
+
+        public async Task<IActionResult> ShowDVDCopiesofActors()
+        {
+            string actorName = Request.Form["actorList"].ToString();
+            var data = from castmembers in _context.CastMemberModel
+                       join actor in _context.ActorModel on castmembers.ActorNumber equals actor.ActorNumber
+                       where actor.ActorSurname == actorName
+                       join dvdtitle in _context.DVDTitleModel
+                       on castmembers.DVDNumber equals dvdtitle.DVDNumber 
+                       select new
+                       {
+                           Title = dvdtitle.DVDTitle,
+                           Cast = from casts in dvdtitle.CastMembers
+                                  join actor in _context.ActorModel on casts.ActorNumber equals actor.ActorNumber
+                                  group actor by new { casts.DVDNumber } into g
+                                  select
+                                       String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
+                           NumberOfCopies = (from dvdcopy in _context.DVDCopyModel 
+                                           join dt in _context.DVDTitleModel on dvdcopy.DVDNumber equals dt.DVDNumber
+                                           join cm in _context.CastMemberModel on dt.DVDNumber equals cm.DVDNumber
+                                           join a in _context.ActorModel on cm.ActorNumber equals a.ActorNumber
+                                           where a.ActorSurname == actorName
+                                           join l in _context.LoanModel on dvdcopy.CopyNumber equals l.CopyNumber
+                                           where l.DateReturned == null
+                                           select dvdcopy).Count()
+                       }
+                       ;
+            return View(data);
+        }
     }
 }

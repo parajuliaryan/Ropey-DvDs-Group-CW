@@ -1,0 +1,24 @@
+﻿@model ActorModel
+@{
+    ViewData["Title"] = "SelectActors";
+}
+
+<h1>SelectActors</h1>
+<form asp-action ="ShowDVDsofActors">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="ActorSurname" class="control-label">View DVDs of Selected Actors</label>
+    <select asp-for="ActorSurname" class ="form-control" asp-items="ViewBag.ActorSurname" name="actorList"></select>
+    <button type="submit">Choose Actor</button>
+</div>
+</form>
+
+<form asp-action ="ShowDVDCopiesofActors">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <label asp-for="ActorSurname" class="control-label">View DVD Copies for the Selected Actors</label>
+    <select asp-for="ActorSurname" class ="form-control" asp-items="ViewBag.ActorSurname" name="actorList"></select>
+    <button type="submit">Choose Actor</button>
+</div>
+</form>
+

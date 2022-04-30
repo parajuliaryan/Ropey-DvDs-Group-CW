@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "ShowDVDsofActors";
+}
+<h1>ShowDVDsofActors</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Actor/s
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+        <td>@item.Title</td>
+        <td>@foreach(var value in item.Cast)
+            {
+                <p>@value</p>
+            }
+        </td>
+        </tr>
+}
+    </tbody>
+</table>
+

@@ -21,6 +21,6 @@ namespace Ropey_DvDs_Group_CW.Models
 
         public DateTime DateDue { get; set; }
 
-        public DateTime DateReturned { get; set; }
+        public DateTime? DateReturned { get; set; }
     }
 }

@@ -5,7 +5,21 @@
 }
 
 <h1>DVDDetailsIndex</h1>
-
+<form asp-action="ShowDVDsList">
+    <div class="form-group">
+    <label class="control-label">Select an actor</label>
+    <select class="form-control">
+         @foreach (var item in Model) {
+            @foreach(var value in item.Cast)
+            {
+              <option value="@value">
+                  @value
+              </option>
+            }
+         }
+    </select>
+    </div>
+</form>
 <table class="table">
     <thead>
         <tr>
