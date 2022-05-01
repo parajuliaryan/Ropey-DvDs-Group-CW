@@ -4,44 +4,42 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>LoanModel</h4>
+    <h4>Loan Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LoanTypeModel)
+           Loan Type
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LoanTypeModel.LoanTypeNumber)
+            @Html.DisplayFor(model => model.LoanTypeModel.LoanType)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DVDCopyModel)
+            DVD Copy
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DVDCopyModel.CopyNumber)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MemberModel)
+            Member
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MemberModel.MemberNumber)
+            @Html.DisplayFor(model => model.MemberModel.MemberFirstName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOut)
+            Date Out
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateOut)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateDue)
+            Date Due
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateDue)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateReturned)
+           Returned Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateReturned)

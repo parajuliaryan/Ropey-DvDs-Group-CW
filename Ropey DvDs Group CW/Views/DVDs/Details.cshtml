@@ -4,50 +4,48 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>DVDTitleModel</h4>
+    <h4>DVD Title Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DVDCategoryModel)
+           DVD Category
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DVDCategoryModel.CategoryNumber)
+            @Html.DisplayFor(model => model.DVDCategoryModel.CategoryDescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StudioModel)
+           Studio
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StudioModel.StudioNumber)
+            @Html.DisplayFor(model => model.StudioModel.StudioName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ProducerModel)
+            Producer
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ProducerModel.ProducerNumber)
+            @Html.DisplayFor(model => model.ProducerModel.ProducerName)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DVDTitle)
+            DVD Title
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DVDTitle)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateReleased)
+            Released Date
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DateReleased)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StandardCharge)
+           Standard Charge
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.StandardCharge)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PenaltyCharge)
+            Penalty Charge
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.PenaltyCharge)

@@ -13,10 +13,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DVDTitleModel)
+               DVD Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatePurchased)
+                Date Purchased
             </th>
             <th></th>
         </tr>
@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DVDTitleModel.DVDNumber)
+                @Html.DisplayFor(modelItem => item.DVDTitleModel.DVDTitle)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DatePurchased)

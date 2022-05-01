@@ -13,26 +13,26 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MembershipCategoryNumber" class="control-label"></label>
+                <label asp-for="MembershipCategoryNumber" class="control-label">Membership Category</label>
                 <select asp-for="MembershipCategoryNumber" class ="form-control" asp-items="ViewBag.MembershipCategoryNumber"></select>
             </div>
             <div class="form-group">
-                <label asp-for="MemberLastName" class="control-label"></label>
+                <label asp-for="MemberLastName" class="control-label">Last Name</label>
                 <input asp-for="MemberLastName" class="form-control" />
                 <span asp-validation-for="MemberLastName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemberFirstName" class="control-label"></label>
+                <label asp-for="MemberFirstName" class="control-label">First Name</label>
                 <input asp-for="MemberFirstName" class="form-control" />
                 <span asp-validation-for="MemberFirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemberAddress" class="control-label"></label>
+                <label asp-for="MemberAddress" class="control-label">Address</label>
                 <input asp-for="MemberAddress" class="form-control" />
                 <span asp-validation-for="MemberAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemberDateOfBirth" class="control-label"></label>
+                <label asp-for="MemberDateOfBirth" class="control-label">DOB</label>
                 <input asp-for="MemberDateOfBirth" class="form-control" />
                 <span asp-validation-for="MemberDateOfBirth" class="text-danger"></span>
             </div>

@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LoanTypeModel)
+               Loan Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DVDCopyModel)
+                DVD Copy
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.MemberModel)
+                Member
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOut)
+               Date Out
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateDue)
+               Date Due
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateReturned)
+               Returned Date
             </th>
             <th></th>
         </tr>
@@ -37,13 +37,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.LoanTypeModel.LoanTypeNumber)
+                @Html.DisplayFor(modelItem => item.LoanTypeModel.LoanType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DVDCopyModel.CopyNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MemberModel.MemberNumber)
+                @Html.DisplayFor(modelItem => item.MemberModel.MemberFirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOut)

@@ -6,19 +6,19 @@
 
 <h1>Create</h1>
 
-<h4>LoanTypeModel</h4>
+<h4>Loan Type</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="LoanType" class="control-label"></label>
+                <label asp-for="LoanType" class="control-label">Loan Type</label>
                 <input asp-for="LoanType" class="form-control" />
                 <span asp-validation-for="LoanType" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LoanDuration" class="control-label"></label>
+                <label asp-for="LoanDuration" class="control-label">Loan Duration</label>
                 <input asp-for="LoanDuration" class="form-control" />
                 <span asp-validation-for="LoanDuration" class="text-danger"></span>
             </div>

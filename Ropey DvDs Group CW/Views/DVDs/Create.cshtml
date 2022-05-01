@@ -6,41 +6,41 @@
 
 <h1>Create</h1>
 
-<h4>DVDTitleModel</h4>
+<h4>DVD Title</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CategoryNumber" class="control-label"></label>
+                <label asp-for="CategoryNumber" class="control-label">DVD Category</label>
                 <select asp-for="CategoryNumber" class ="form-control" asp-items="ViewBag.CategoryNumber"></select>
             </div>
             <div class="form-group">
-                <label asp-for="StudioNumber" class="control-label"></label>
+                <label asp-for="StudioNumber" class="control-label">Studio</label>
                 <select asp-for="StudioNumber" class ="form-control" asp-items="ViewBag.StudioNumber"></select>
             </div>
             <div class="form-group">
-                <label asp-for="ProducerNumber" class="control-label"></label>
+                <label asp-for="ProducerNumber" class="control-label">Producer</label>
                 <select asp-for="ProducerNumber" class ="form-control" asp-items="ViewBag.ProducerNumber"></select>
             </div>
             <div class="form-group">
-                <label asp-for="DVDTitle" class="control-label"></label>
+                <label asp-for="DVDTitle" class="control-label"> DVD Title</label>
                 <input asp-for="DVDTitle" class="form-control" />
                 <span asp-validation-for="DVDTitle" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateReleased" class="control-label"></label>
+                <label asp-for="DateReleased" class="control-label">Released Date</label>
                 <input asp-for="DateReleased" class="form-control" />
                 <span asp-validation-for="DateReleased" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="StandardCharge" class="control-label"></label>
+                <label asp-for="StandardCharge" class="control-label">Standard Charge</label>
                 <input asp-for="StandardCharge" class="form-control" />
                 <span asp-validation-for="StandardCharge" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PenaltyCharge" class="control-label"></label>
+                <label asp-for="PenaltyCharge" class="control-label">Penalty Charge</label>
                 <input asp-for="PenaltyCharge" class="form-control" />
                 <span asp-validation-for="PenaltyCharge" class="text-danger"></span>
             </div>
