@@ -241,8 +241,9 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                            join cm in _context.CastMemberModel on dt.DVDNumber equals cm.DVDNumber
                                            join a in _context.ActorModel on cm.ActorNumber equals a.ActorNumber
                                            where a.ActorSurname == actorName
+                                           where dvdcopy.DVDNumber == dvdtitle.DVDNumber
                                            join l in _context.LoanModel on dvdcopy.CopyNumber equals l.CopyNumber
-                                           where l.DateReturned == null
+                                           where l.DateReturned != null
                                            select dvdcopy).Count()
                        }
                        ;
