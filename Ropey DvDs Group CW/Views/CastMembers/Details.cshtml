@@ -4,23 +4,21 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>CastMemberModel</h4>
+    <h4>CastMember Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DVDTitleModel)
+            DVD Title
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DVDTitleModel.DVDNumber)
+            @Html.DisplayFor(model => model.DVDTitleModel.DVDTitle)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ActorModel)
+            Actor Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ActorModel.ActorNumber)
+            @Html.DisplayFor(model => model.ActorModel.ActorFirstName)
         </dd>
     </dl>
 </div>

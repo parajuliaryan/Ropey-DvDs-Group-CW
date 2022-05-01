@@ -13,25 +13,25 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DVDCategoryModel)
+                DVD Category
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StudioModel)
+                Studio
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProducerModel)
+                Producer
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DVDTitle)
+               DVD Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateReleased)
+                Released Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StandardCharge)
+                Standard Charge
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PenaltyCharge)
+                Penalty Charge
             </th>
             <th></th>
         </tr>
@@ -40,13 +40,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DVDCategoryModel.CategoryNumber)
+                @Html.DisplayFor(modelItem => item.DVDCategoryModel.CategoryDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StudioModel.StudioNumber)
+                @Html.DisplayFor(modelItem => item.StudioModel.StudioName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ProducerModel.ProducerNumber)
+                @Html.DisplayFor(modelItem => item.ProducerModel.ProducerName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DVDTitle)

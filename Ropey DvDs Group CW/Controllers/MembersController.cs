@@ -89,7 +89,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // GET: Members/Create
         public IActionResult Create()
         {
-            ViewData["MembershipCategoryNumber"] = new SelectList(_context.Set<MembershipCategoryModel>(), "MembershipCategoryNumber", "MembershipCategoryNumber");
+            ViewData["MembershipCategoryNumber"] = new SelectList(_context.Set<MembershipCategoryModel>(), "MembershipCategoryDescription", "MembershipCategoryDescription");
             return View();
         }
 
