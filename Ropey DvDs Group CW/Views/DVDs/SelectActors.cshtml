@@ -3,22 +3,22 @@
     ViewData["Title"] = "SelectActors";
 }
 
-<h1>SelectActors</h1>
+<h1>Select Actors</h1>
 <form asp-action ="ShowDVDsofActors">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<div class="form-group">
+<div class="form-group mt-3">
     <label asp-for="ActorSurname" class="control-label">View DVDs of Selected Actors</label>
     <select asp-for="ActorSurname" class ="form-control" asp-items="ViewBag.ActorSurname" name="actorList"></select>
-    <button type="submit">Choose Actor</button>
+    <button class="btn btn-primary mt-3" type="submit">Choose Actor</button>
 </div>
 </form>
 
 <form asp-action ="ShowDVDCopiesofActors">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-<div class="form-group">
+<div class="form-group mt-3">
     <label asp-for="ActorSurname" class="control-label">View DVD Copies for the Selected Actors</label>
     <select asp-for="ActorSurname" class ="form-control" asp-items="ViewBag.ActorSurname" name="actorList"></select>
-    <button type="submit">Choose Actor</button>
+    <button class="btn btn-primary mt-3" type="submit">Choose Actor</button>
 </div>
 </form>
 

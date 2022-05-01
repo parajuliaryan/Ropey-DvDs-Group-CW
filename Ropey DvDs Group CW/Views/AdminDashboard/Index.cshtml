@@ -2,17 +2,84 @@
 @{
  ViewData["Title"] = "Dashboard";
 }
-
-<ul>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="Actors" asp-action="Index">Actors</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDCategory" asp-action="Index">DvD Categories</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="CastMembers" asp-action="Index">Cast Members</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDCopy" asp-action="Index">DvD Copies</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="Index">DvDs</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="LoanTypes" asp-action="Index">Loan Types</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="Loans" asp-action="Index">Loans</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="MembershipCategory" asp-action="Index">Membership Category</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="Index">Members</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="Producers" asp-action="Index">Producers</a></li>
-	<li><a class="nav-link text-dark" asp-area="" asp-controller="Studio" asp-action="Index">Studios</a></li>
-</ul>
+<nav
+       id="sidebarMenu"
+       class="collapse d-lg-block sidebar collapse bg-white col-3"
+       >
+    <div class="position-sticky">
+      <div class="list-group list-group-flush mx-0 mt-4">
+        <a
+           asp-area="" asp-controller="Actors" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           aria-current="true"
+           >
+          <i class="fa fa-user-o me-3" aria-hidden="true"></i>
+            <span>Actors</span>
+        </a>
+        <a
+           asp-area="" asp-controller="DVDCategory" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple active"
+           >
+          <i class="fa fa-superpowers me-3"></i
+         >
+            <span>DVD Categories</span>
+        </a>
+        <a
+           asp-area="" asp-controller="CastMembers" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-users me-3"></i><span>Cast Members</span>
+           </a>
+        <a
+           asp-area="" asp-controller="DVDCopy" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-users me-3"></i
+          ><span>DVD Copies</span>
+          </a>
+        
+        <a
+           asp-area="" asp-controller="DVDs" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           >
+          <i class="fa fa-stop-circle me-3"></i><span>DVDs</span>
+        </a>
+        <a
+           asp-area="" asp-controller="LoanTypes" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-credit-card-alt me-3"></i><span>Loan Types</span>
+           </a>
+        
+        <a
+           asp-area="" asp-controller="Loans" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-money me-3"></i
+          ><span>Loans</span>
+          </a>
+        <a
+           asp-area="" asp-controller="MembershipCategory" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-slack me-3"></i
+          ><span>Membership Catgeories</span>
+          </a>
+          
+        <a
+            asp-area="" asp-controller="Members" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-id-badge me-3"></i
+          ><span>Members</span>
+          </a>
+          
+        <a
+           asp-area="" asp-controller="Producers" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-handshake-o me-3"></i><span>Producers</span>
+           </a>
+          
+        <a
+           asp-area="" asp-controller="Studio" asp-action="Index"
+           class="list-group-item list-group-item-action py-2 ripple"
+           ><i class="fa fa-stumbleupon-circle me-3"></i><span>Studios</span>
+           </a>
+          
+      </div>
+    </div>
+  </nav>
