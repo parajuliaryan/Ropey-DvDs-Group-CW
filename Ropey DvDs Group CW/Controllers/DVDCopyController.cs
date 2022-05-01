@@ -172,5 +172,62 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             return _context.DVDCopyModel.Any(e => e.CopyNumber == id);
         }
+
+        public async Task<IActionResult> OlderCopyDVD()
+        {
+
+
+            var loanedCopyDVD = (from loan in _context.LoanModel
+                                where loan.DateReturned == null
+                                select loan.CopyNumber).Distinct();
+
+            var notloanedCopyDVD = (from copy in _context.DVDCopyModel
+                                   join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                   where !(loanedCopyDVD).Contains(copy.CopyNumber)
+                                   select new
+                                   {
+                                       CopyNumber = copy.CopyNumber,
+                                       DVDTitle = dvdtitle.DVDTitle,
+                                       DatePurchased = copy.DatePurchased
+                                   });
+
+            return View(await notloanedCopyDVD.ToListAsync());
+        }
+
+        public async Task<IActionResult> RemoveOldCopies()
+        {
+            var loanedCopyDVD = (from loan in _context.LoanModel
+                                 where loan.DateReturned == null
+                                 select loan.CopyNumber).Distinct();
+
+            var notloanedCopyDVD = (from copy in _context.DVDCopyModel
+                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                    where !(loanedCopyDVD).Contains(copy.CopyNumber)
+                                    select new
+                                    {
+                                        CopyNumber = copy.CopyNumber,
+                                        DVDTitle = dvdtitle.DVDTitle,
+                                        DatePurchased = copy.DatePurchased
+                                    });
+            
+            foreach(var copy in notloanedCopyDVD.ToList())
+            {
+                if(DateTime.Now.Subtract(copy.DatePurchased).Days > 365)
+                {
+                    var remove = (from removeCopy in _context.DVDCopyModel
+                                  where removeCopy.CopyNumber == copy.CopyNumber
+                                  select removeCopy).FirstOrDefault();
+                    _context.DVDCopyModel.Remove(remove);
+                   
+                }
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> LoanedOutCopies()
+        {
+            return View();
+        }
     }
 }

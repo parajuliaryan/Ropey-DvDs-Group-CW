@@ -1,0 +1,51 @@
+﻿
+@{
+    ViewData["Title"] = "OlderCopyDVD";
+}
+
+<h1>OlderCopyDVD</h1>
+
+<form asp-action="RemoveOldCopies">
+    <button type="submit">Remove Old Copies</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Copy Number
+            </th>
+            <th>
+               DVD Title
+            </th>
+            <th>
+               Date Purchased
+            </th>
+            <th>
+               Days Old
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+                @if (DateTime.Now.Subtract(item.DatePurchased).Days > 365)
+                {
+                    <tr>
+                        <td>
+                            @item.CopyNumber
+                        </td>
+                        <td>
+                            @item.DVDTitle
+                        </td>
+                        <td>
+                            @item.DatePurchased
+                        </td>
+                        <td>
+                            @DateTime.Now.Subtract(item.DatePurchased).Days
+                        </td>
+                    </tr>
+                }
+        }
+    </tbody>
+</table>
