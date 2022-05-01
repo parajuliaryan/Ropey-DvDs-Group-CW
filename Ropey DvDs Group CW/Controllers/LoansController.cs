@@ -112,8 +112,20 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 try
                 {
-                    _context.Update(loanModel);
-                    await _context.SaveChangesAsync();
+                    if((loanModel.DateReturned - loanModel.DateDue).Value.TotalDays >= 0)
+                    {
+                        _context.Update(loanModel);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Payment", loanModel);
+                    }
+                    else
+                    {
+                        ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
+                        ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
+                        ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
+                        return View(loanModel);
+                    }
+                    
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,6 +144,35 @@ namespace Ropey_DvDs_Group_CW.Controllers
             ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
             ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
             return View(loanModel);
+        }
+
+        public async Task<IActionResult> Payment(LoanModel loanModel)
+        {
+            var loanDetails = (from loans in _context.LoanModel
+                               join member in _context.MemberModel on loans.MemberNumber equals member.MemberNumber
+                               join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber
+                               join loanType in _context.LoanTypeModel on loans.LoanTypeNumber equals loanType.LoanTypeNumber
+                               join copy in _context.DVDCopyModel on loans.CopyNumber equals copy.CopyNumber
+                               join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                               where loans.LoanNumber == loanModel.LoanNumber
+                               select new
+                               {
+                                  LoanNumber = loanModel.LoanNumber,
+                                  CopyNumber = loans.CopyNumber,
+                                  DateOut = loans.DateOut,
+                                  DateDue = loans.DateDue,
+                                  DateReturned = loanModel.DateReturned,
+                                  Member = member.MemberFirstName + " " + member.MemberLastName,
+                                  Membership = membership.MembershipCategoryDescription,
+                                  LoanType = loanType.LoanType,
+                                  LoanDuration = loanType.LoanDuration,
+                                  DVDTitle = dvdtitle.DVDTitle,
+                                  StandardCharge = dvdtitle.StandardCharge,
+                                  PenaltyCharge = dvdtitle.PenaltyCharge,
+
+                                  
+                               }).FirstOrDefault();
+            return View(loanDetails);
         }
 
         // GET: Loans/Delete/5
