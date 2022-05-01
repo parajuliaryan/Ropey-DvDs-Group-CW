@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewData["Title"] = "DVDsNotLoaned";
+}
+
+<h1>DVDsNotLoaned</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Date Out
+            </th>
+            <th>
+               Copy Number
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+        <td>@item.Title</td>
+        <td>@item.Loan</td>
+        <td>@item.CopyNumber</td>
+        </tr>
+}
+    </tbody>
+</table>

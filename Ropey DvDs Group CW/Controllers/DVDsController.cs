@@ -248,5 +248,27 @@ namespace Ropey_DvDs_Group_CW.Controllers
                        ;
             return View(data);
         }
+
+        public async Task<IActionResult> DVDsNotLoaned()
+        {
+            var differenceDate = DateTime.Now.AddDays(-31);
+
+            var loanedCopyIn31Days = (from loan in _context.LoanModel
+                                 where loan.DateOut >= differenceDate
+                                 select loan.CopyNumber).Distinct();
+
+            var notloanedCopyDVD = (from copy in _context.DVDCopyModel
+                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                    join loan in _context.LoanModel on copy.CopyNumber equals loan.CopyNumber
+                                    where !(loanedCopyIn31Days).Contains(copy.CopyNumber)
+                                    select new
+                                    {
+                                        CopyNumber = copy.CopyNumber,
+                                        Title = dvdtitle.DVDTitle,
+                                        Loan = loan.DateOut,
+                                    });
+
+            return View(notloanedCopyDVD);
+        }
     }
 }
