@@ -58,7 +58,8 @@ namespace Ropey_DvDs_Group_CW.Controllers
             var differenceDate = DateTime.Now.AddDays(-31);
             var data = from member in _context.MemberModel join
                         loan in _context.LoanModel on member.MemberNumber equals loan.MemberNumber
-                        where loan.DateOut >= differenceDate 
+                        where loan.DateOut >= differenceDate
+                        where member.MemberNumber == id  
                         join dvdcopy in _context.DVDCopyModel on loan.CopyNumber equals dvdcopy.CopyNumber
                         join dvdtitle in _context.DVDTitleModel on dvdcopy.DVDNumber equals dvdtitle.DVDNumber
                         select new
@@ -196,6 +197,35 @@ namespace Ropey_DvDs_Group_CW.Controllers
         private bool MemberModelExists(int id)
         {
             return _context.MemberModel.Any(e => e.MemberNumber == id);
+        }
+
+        public async Task<IActionResult> SleepingMembers()
+        {
+            var differenceDate = DateTime.Now.AddDays(-31);
+            var loanTakenByMembers = (from loans in _context.LoanModel
+                                     where loans.DateOut >= differenceDate
+                                     select loans.MemberNumber).Distinct();
+
+            var loanNotTakenByMembers = from members in _context.MemberModel                                       
+                                        where !(loanTakenByMembers).Contains(members.MemberNumber)
+                                        select new
+                                        {
+                                            MemberName = members.MemberFirstName + " " + members.MemberLastName,
+                                            MemberAddress = members.MemberAddress,
+                                            LastLoan = (from loans in _context.LoanModel
+                                                        join copy in _context.DVDCopyModel on loans.CopyNumber equals copy.CopyNumber
+                                                        join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                        where loans.MemberNumber == members.MemberNumber
+                                                        orderby loans.DateOut descending
+                                                        select new
+                                                        {
+                                                            DateOut = loans.DateOut,
+                                                            DVDTitle = dvdtitle.DVDTitle,
+                                                        }
+                                                        ).FirstOrDefault()
+                                        };
+
+            return View(loanNotTakenByMembers);
         }
     }
 }
