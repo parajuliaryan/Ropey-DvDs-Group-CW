@@ -1,0 +1,86 @@
+﻿
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<h1>Payment</h1>
+
+<div>
+    <h4>LoanModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Loan Number
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.LoanNumber
+        </dd>
+        <dt class = "col-sm-2">
+            Copy Number
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.CopyNumber
+        </dd>
+        <dt class = "col-sm-2">
+            DVD Title
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DVDTitle
+        </dd>
+        <dt class = "col-sm-2">
+            Date Out
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DateOut.ToString("dd-MMMM-yyyy")
+        </dd>
+        <dt class = "col-sm-2">
+            Date Due
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DateDue.ToString("dd-MMMM-yyyy")
+        </dd>
+        <dt class = "col-sm-2">
+            Date Returned
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.DateReturned.ToString("dd-MMMM-yyyy")
+        </dd>
+        <dt class = "col-sm-2">
+            Member
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Member
+        </dd>
+        <dt class = "col-sm-2">
+            Membership Type
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Membership
+        </dd>
+        <dt class = "col-sm-2">
+            Loan Type
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.LoanType
+        </dd>
+        <dt class = "col-sm-2">
+            Standard Charge
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.StandardCharge
+        </dd>
+        @if (Model.DateReturned.Subtract(Model.DateOut).Days > Model.LoanDuration)
+        {
+            <dt class = "col-sm-2">
+            Penalty Charge
+        </dt>
+        <dd class = "col-sm-10">
+            @((Model.DateReturned.Subtract(Model.DateOut).Days - Model.LoanDuration ) * Model.PenaltyCharge)
+        </dd>
+        }
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" asp-controller="AdminDashboard">Back to Dashboard</a>
+</div>
