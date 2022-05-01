@@ -227,7 +227,55 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> LoanedOutCopies()
         {
-            return View();
+ 
+
+            if(Request.Form.Count() == 2 )
+            {
+                ViewData["SelectedDate"] = Request.Form["SearchDate"].ToString();
+                DateTime searchingDate = DateTime.Parse(Request.Form["SearchDate"].ToString());
+                var applicationDBContext = from loan in _context.LoanModel
+                                           join copy in _context.DVDCopyModel on loan.CopyNumber equals copy.CopyNumber
+                                           join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                           join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
+                                           orderby loan.DateOut
+                                           where loan.DateReturned == null
+                                           where loan.DateOut.Date == searchingDate.Date
+                                           select new
+                                           {
+                                               LoanNumber = loan.LoanNumber,
+                                               DVDTitle = dvdtitle.DVDTitle,
+                                               CopyNumber = copy.CopyNumber,
+                                               Member = member.MemberFirstName + " " + member.MemberLastName,
+                                               DateOut = loan.DateOut
+                                           };
+                ViewData["TotalLoans"] = applicationDBContext.ToList().Count();
+
+                return View(await applicationDBContext.ToListAsync());
+
+            }
+            else
+            {
+                ViewData["SelectedDate"] = DateTime.Today.ToString("yyyy-MM-dd");
+                var applicationDBContext = from loan in _context.LoanModel
+                                           join copy in _context.DVDCopyModel on loan.CopyNumber equals copy.CopyNumber
+                                           join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                           join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
+                                           orderby loan.DateOut
+                                           where loan.DateReturned == null
+                                           where loan.DateOut.Date == DateTime.Today.Date
+                                           select new
+                                           {
+                                               LoanNumber = loan.LoanNumber,
+                                               DVDTitle = dvdtitle.DVDTitle,
+                                               CopyNumber = copy.CopyNumber,
+                                               Member = member.MemberFirstName + " " + member.MemberLastName,
+                                               DateOut = loan.DateOut
+                                           };
+                ViewData["TotalLoans"] = applicationDBContext.ToList().Count();
+
+                return View(await applicationDBContext.ToListAsync());
+            }
+            
         }
     }
 }

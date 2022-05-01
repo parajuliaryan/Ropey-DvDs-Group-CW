@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "LoanedOutCopies";
+}
+
+<h1>LoanedOutCopies</h1>
+
+<form asp-action="LoanedOutCopies">
+    <input type="date" value="@ViewBag.SelectedDate" name="SearchDate" /> 
+    <button type="submit">Search by Date</button>
+</form>
+<p>Total Loans taken at @ViewBag.SelectedDate : @ViewBag.TotalLoans</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Loan Number
+            </th>
+            <th>
+                DVD Title
+            </th>
+            <th>
+                Copy Number
+            </th>
+            <th>
+                Member
+            </th>
+            <th>
+                Date Out
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.LoanNumber
+            </td>     
+            <td>
+                @item.DVDTitle
+            </td>  
+            <td>
+                @item.CopyNumber
+            </td>  
+            <td>
+                @item.Member
+            </td>  
+            <td>
+                @item.DateOut
+            </td>  
+        </tr>
+}
+    </tbody>
+</table>
