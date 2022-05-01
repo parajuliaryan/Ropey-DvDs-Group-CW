@@ -5,7 +5,7 @@
 }
 
 <div>
-    <h4>CastMember Details</h4>
+    <h4 class="text-center">CastMember Details</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -23,6 +23,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a class="btn btn-primary-edit" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
