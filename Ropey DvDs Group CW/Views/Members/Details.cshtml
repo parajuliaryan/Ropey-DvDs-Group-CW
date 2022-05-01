@@ -1,4 +1,4 @@
-﻿@model Ropey_DvDs_Group_CW.Models.MemberModel
+﻿@*@model Ropey_DvDs_Group_CW.Models.MemberModel*@
 
 @{
     ViewData["Title"] = "Details";
@@ -10,7 +10,35 @@
     <h4>MemberModel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        @foreach (var item in Model)
+        {
+            <dt class = "col-sm-2">
+                Member Name
+            </dt>
+            <dd class = "col-sm-10">
+               @item.Member
+            </dd>
+            <dt class = "col-sm-2">
+               Loan
+            </dt>
+            <dd class = "col-sm-10">
+               @item.Loan
+            </dd>
+            <dt class = "col-sm-2">
+                DVD Title
+            </dt>
+            <dd class = "col-sm-10">
+               @item.Title
+            </dd>
+            <dt class = "col-sm-2">
+                Copy Number
+            </dt>
+            <dd class = "col-sm-10">
+               @item.CopyNumber
+            </dd>
+            <hr />
+        }
+        @*        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.membershipCategoryModel)
         </dt>
         <dd class = "col-sm-10">
@@ -39,10 +67,9 @@
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MemberDateOfBirth)
-        </dd>
+        </dd>*@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.MemberNumber">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

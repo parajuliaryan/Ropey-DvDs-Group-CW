@@ -1,6 +1,7 @@
 ﻿#nullable disable
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -53,12 +54,36 @@ namespace Ropey_DvDs_Group_CW.Controllers
             var memberModel = await _context.MemberModel
                 .Include(m => m.membershipCategoryModel)
                 .FirstOrDefaultAsync(m => m.MemberNumber == id);
+
+            var differenceDate = DateTime.Now.AddDays(-31);
+            var data = from member in _context.MemberModel join
+                        loan in _context.LoanModel on member.MemberNumber equals loan.MemberNumber
+                        where loan.DateOut >= differenceDate 
+                        join dvdcopy in _context.DVDCopyModel on loan.CopyNumber equals dvdcopy.CopyNumber
+                        join dvdtitle in _context.DVDTitleModel on dvdcopy.DVDNumber equals dvdtitle.DVDNumber
+                        select new
+                        {
+                            Member = member.MemberFirstName,
+                            Loan = loan.LoanNumber,
+                            CopyNumber = dvdcopy.CopyNumber,
+                            Title = dvdtitle.DVDTitle,
+                        };
+
             if (memberModel == null)
             {
                 return NotFound();
             }
 
-            return View(memberModel);
+            if (data == null )
+            {
+                return View(memberModel);
+            }
+            else
+            {
+                return View(data);
+            }
+
+            
         }
 
         // GET: Members/Create
