@@ -4,16 +4,16 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center">Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create New</a>
 </p>
-<form asp-action="OlderCopyDVD">
-    <button type="submit">Older Copies</button>
+<form  asp-action="OlderCopyDVD">
+    <button class="btn btn-primary-details mt-2" type="submit">Older Copies</button>
 </form>
 <form asp-action="LoanedOutCopies">
-    <button type="submit">Loaned Out Copies</button>
+    <button class="btn btn-primary-delete mt-2"type="submit">Loaned Out Copies</button>
 </form>
 <table class="table">
     <thead>
@@ -37,9 +37,9 @@
                 @Html.DisplayFor(modelItem => item.DatePurchased)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CopyNumber">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CopyNumber">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CopyNumber">Delete</a>
+                <a class="btn btn-primary-edit" asp-action="Edit" asp-route-id="@item.CopyNumber">Edit</a> |
+                <a class="btn btn-primary-details" asp-action="Details" asp-route-id="@item.CopyNumber">Details</a> |
+                <a class="btn btn-primary-delete" asp-action="Delete" asp-route-id="@item.CopyNumber">Delete</a>
             </td>
         </tr>
 }

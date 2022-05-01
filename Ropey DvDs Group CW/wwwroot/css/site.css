@@ -42,4 +42,43 @@ body {
         border-color: #00b0b1;
         color: #00b0b1;
     }
-/**/
+.btn-primary-edit {
+    background-color: #0073b1;
+    border-color: #0073b1;
+    color:white;
+}
+
+    .btn-primary-edit:hover {
+        background-color: white;
+        border-color: ##0073b1;
+        color: #0073b1;
+}
+.btn-primary-delete {
+    background-color: #b10000;
+    border-color: #b10000;
+    color: white;
+}
+
+    .btn-primary-delete:hover {
+        background-color: white;
+        border-color: #b10000 ;
+        color: #b10000;
+}
+.btn-primary-details {
+    background-color: #36b2b3;
+    border-color: #36b2b3;
+    color: white;
+}
+
+    .btn-primary-details:hover {
+        background-color: white;
+        border-color: #36b2b3;
+        color: #36b2b3;
+}
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #00b0b1;
+    border-color: #00b0b1;
+    /**/
