@@ -238,7 +238,6 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                            join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
                                            join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
                                            orderby loan.DateOut
-                                           where loan.DateReturned == null
                                            where loan.DateOut.Date == searchingDate.Date
                                            select new
                                            {

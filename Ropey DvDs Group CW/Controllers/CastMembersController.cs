@@ -93,8 +93,16 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 return NotFound();
             }
-            ViewData["ActorNumber"] = new SelectList(_context.ActorModel, "ActorNumber", "ActorNumber", castMemberModel.ActorNumber);
-            ViewData["DVDNumber"] = new SelectList(_context.DVDTitleModel, "DVDNumber", "DVDNumber", castMemberModel.DVDNumber);
+            //Using LINQ to create new SelectList
+            ViewData["ActorNumber"] = new SelectList((from s in _context.ActorModel
+                                                      select new
+                                                      {
+                                                          ID = s.ActorNumber,
+                                                          FullName = s.ActorFirstName + " " + s.ActorSurname
+                                                      }), "ID", "FullName");
+
+
+            ViewData["DVDNumber"] = new SelectList(_context.DVDTitleModel, "DVDNumber", "DVDTitle");
             return View(castMemberModel);
         }
 

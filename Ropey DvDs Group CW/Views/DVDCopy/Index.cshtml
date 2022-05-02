@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Index</h1>
+<h1 class="text-center">DVD Copies Index</h1>
 
 <p>
     <a class="btn btn-primary" asp-action="Create">Create New</a>
@@ -19,6 +19,9 @@
     <thead>
         <tr>
             <th>
+               DVD Copy Number
+            </th>
+            <th>
                DVD Title
             </th>
             <th>
@@ -30,6 +33,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CopyNumber)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DVDTitleModel.DVDTitle)
             </td>

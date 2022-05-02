@@ -4,9 +4,8 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Edit</h1>
+<h1 class="text-center">Edit Cast Member</h1>
 
-<h4 class="text-center" style="text-decoration:underline">CastMemberModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4 mx-auto">
@@ -14,12 +13,12 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="DVDNumber" class="control-label"></label>
+                <label class="control-label">DVD Title</label>
                 <select asp-for="DVDNumber" class="form-control" asp-items="ViewBag.DVDNumber"></select>
                 <span asp-validation-for="DVDNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ActorNumber" class="control-label"></label>
+                <label class="control-label">Actor Name</label>
                 <select asp-for="ActorNumber" class="form-control" asp-items="ViewBag.ActorNumber"></select>
                 <span asp-validation-for="ActorNumber" class="text-danger"></span>
             </div>
