@@ -44,6 +44,16 @@
                 <input asp-for="PenaltyCharge" class="form-control" />
                 <span asp-validation-for="PenaltyCharge" class="text-danger"></span>
             </div>
+            <div>
+                <label class="control-label">Actor(s)</label>
+                <br />
+                <select name="multipleSelect" multiple>
+                    @foreach(var optionValue in ViewBag.ListBoxData)
+                    {
+                        <option value="@optionValue.ActorNumber">@optionValue.ActorName</option>
+                    }
+                </select>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>

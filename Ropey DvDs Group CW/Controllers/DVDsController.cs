@@ -55,6 +55,16 @@ namespace Ropey_DvDs_Group_CW.Controllers
             ViewData["CategoryNumber"] = new SelectList(_context.Set<DVDCategoryModel>(), "CategoryNumber", "CategoryDescription");
             ViewData["ProducerNumber"] = new SelectList(_context.Set<ProducerModel>(), "ProducerNumber", "ProducerName");
             ViewData["StudioNumber"] = new SelectList(_context.Set<StudioModel>(), "StudioNumber", "StudioName");
+            var data = from actor in _context.ActorModel
+                       orderby actor.ActorFirstName,actor.ActorSurname
+                       select new
+                       {
+                           ActorNumber = actor.ActorNumber,
+                           ActorName = actor.ActorFirstName + " " + actor.ActorSurname
+                       };
+
+            
+            ViewData["ListBoxData"] = data;
             return View();
         }
 
@@ -63,17 +73,41 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("DVDNumber,CategoryNumber,StudioNumber,ProducerNumber,DVDTitle,DateReleased,StandardCharge,PenaltyCharge")] DVDTitleModel dVDTitleModel)
+        public async Task<IActionResult> Create([Bind("DVDNumber,CategoryNumber,StudioNumber,ProducerNumber,DVDTitle,DateReleased,StandardCharge,PenaltyCharge")] DVDTitleModel dVDTitleModel, List<int> multipleSelect)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(dVDTitleModel);
                 await _context.SaveChangesAsync();
+                var latestEntry = (from dvdtitle in _context.DVDTitleModel
+                                  orderby dvdtitle.DVDNumber descending
+                                  select dvdtitle.DVDNumber).FirstOrDefault();
+
+                foreach(int id in multipleSelect)
+                {
+                    CastMemberModel castMemberModel = new CastMemberModel();
+                    castMemberModel.DVDNumber = latestEntry;
+                    castMemberModel.ActorNumber = id;
+                    _context.Add(castMemberModel);
+                    await _context.SaveChangesAsync();
+
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CategoryNumber"] = new SelectList(_context.Set<DVDCategoryModel>(), "CategoryNumber", "CategoryNumber", dVDTitleModel.CategoryNumber);
             ViewData["ProducerNumber"] = new SelectList(_context.Set<ProducerModel>(), "ProducerNumber", "ProducerNumber", dVDTitleModel.ProducerNumber);
             ViewData["StudioNumber"] = new SelectList(_context.Set<StudioModel>(), "StudioNumber", "StudioNumber", dVDTitleModel.StudioNumber);
+            var data = from actor in _context.ActorModel
+                       orderby actor.ActorFirstName, actor.ActorSurname
+                       select new
+                       {
+                           ActorNumber = actor.ActorNumber,
+                           ActorName = actor.ActorFirstName + " " + actor.ActorSurname
+                       };
+
+
+            ViewData["ListBoxData"] = data;
             return View(dVDTitleModel);
         }
 
