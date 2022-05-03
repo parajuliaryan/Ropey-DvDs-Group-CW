@@ -4,9 +4,9 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Edit Member</h1>
 
-<h4>MemberModel</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,20 +14,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MemberNumber" />
             <div class="form-group">
-                <label asp-for="MembershipCategoryNumber" class="control-label"></label>
+                <label asp-for="MembershipCategoryNumber" class="control-label"> Membership</label>
                 <select asp-for="MembershipCategoryNumber" class="form-control" asp-items="ViewBag.MembershipCategoryNumber"></select>
                 <span asp-validation-for="MembershipCategoryNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MemberLastName" class="control-label"></label>
-                <input asp-for="MemberLastName" class="form-control" />
-                <span asp-validation-for="MemberLastName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MemberFirstName" class="control-label"></label>
+                <label asp-for="MemberFirstName" class="control-label">Member First Name</label>
                 <input asp-for="MemberFirstName" class="form-control" />
                 <span asp-validation-for="MemberFirstName" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="MemberLastName" class="control-label">Member Last Name</label>
+                <input asp-for="MemberLastName" class="form-control" />
+                <span asp-validation-for="MemberLastName" class="text-danger"></span>
+            </div>
+            
             <div class="form-group">
                 <label asp-for="MemberAddress" class="control-label"></label>
                 <input asp-for="MemberAddress" class="form-control" />

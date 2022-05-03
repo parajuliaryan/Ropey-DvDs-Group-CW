@@ -64,7 +64,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                         join dvdtitle in _context.DVDTitleModel on dvdcopy.DVDNumber equals dvdtitle.DVDNumber
                         select new
                         {
-                            Member = member.MemberFirstName,
+                            Member = member.MemberFirstName + " " + member.MemberLastName,
                             Loan = loan.LoanNumber,
                             CopyNumber = dvdcopy.CopyNumber,
                             Title = dvdtitle.DVDTitle,
@@ -124,7 +124,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 return NotFound();
             }
-            ViewData["MembershipCategoryNumber"] = new SelectList(_context.Set<MembershipCategoryModel>(), "MembershipCategoryNumber", "MembershipCategoryNumber", memberModel.MembershipCategoryNumber);
+            ViewData["MembershipCategoryNumber"] = new SelectList(_context.Set<MembershipCategoryModel>(), "MembershipCategoryNumber", "MembershipCategoryDescription", memberModel.MembershipCategoryNumber);
             return View(memberModel);
         }
 

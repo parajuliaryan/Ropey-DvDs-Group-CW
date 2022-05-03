@@ -28,7 +28,7 @@
                 @Html.DisplayFor(modelItem => item.DVDTitleModel.DVDTitle)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ActorModel.ActorFirstName)
+                @Html.DisplayFor(modelItem => item.ActorModel.ActorFirstName) @Html.DisplayFor(modelItem => item.ActorModel.ActorSurname)
             </td>
             <td>
                 <a class="btn btn-primary-edit" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
