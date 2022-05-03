@@ -72,15 +72,81 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(loanModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var memberDOB = from member in _context.MemberModel
+                                join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber
+                                where member.MemberNumber == loanModel.MemberNumber
+                                select new
+                                {
+                                    DateOfBirth = member.MemberDateOfBirth,
+                                    totalLoans = membership.MembershipCategoryTotalLoan
+
+                                };
+                var data1 = memberDOB.FirstOrDefault();
+
+                var ageRestricted = from copy in _context.DVDCopyModel
+                                    join title in _context.DVDTitleModel on copy.DVDNumber equals title.DVDNumber
+                                    join category in _context.DVDCategoryModel on title.CategoryNumber equals category.CategoryNumber
+                                    where copy.CopyNumber == loanModel.CopyNumber
+                                    select new
+                                    {
+                                        restricted = category.AgeRestricted,
+                                    };
+                var data2 = ageRestricted.FirstOrDefault();
+
+                var loansTaken = (from loans in _context.LoanModel
+                             where loans.MemberNumber == loanModel.MemberNumber
+                             select loans).Count();
+
+                if (loansTaken < data1.totalLoans)
+                {                   
+                        var dt = data1.DateOfBirth;
+                        var today = DateTime.Today;
+                        var age = today.Year - dt.Year;
+
+                        if (dt.Date > today.AddYears(-age)) age--;
+
+                    if (data2.restricted)
+                    {
+                        if (age >= 18)
+                        {
+                          
+                            _context.Add(loanModel);
+                            await _context.SaveChangesAsync();
+                            return RedirectToAction(nameof(Index));
+                        }
+                        else
+                        {
+                            ViewData["DangerAlert"] = "This user is too young";
+                        }
+                    }
+                    else
+                    {
+                        _context.Add(loanModel);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                        
+                    
+
+                }
+                else
+                {
+                    ViewData["DangerAlert"] = "This user can\'t take more loans";
+                }
+
             }
-            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
-            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
-            ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
-            return View(loanModel);
+            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber");
+            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
+            ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
+                                                      select new
+                                                      {
+                                                          MemberNumber = member.MemberNumber,
+                                                          MemberName = member.MemberFirstName + " " + member.MemberLastName,
+                                                      }, "MemberNumber", "MemberName");
+            return View();
         }
+            
 
         // GET: Loans/Edit/5
         public async Task<IActionResult> Edit(int? id)
