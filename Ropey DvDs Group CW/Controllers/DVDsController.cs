@@ -257,11 +257,17 @@ namespace Ropey_DvDs_Group_CW.Controllers
         public async Task<IActionResult> ShowDVDCopiesofActors()
         {
             string actorName = Request.Form["actorList"].ToString();
+           
+            var loanedCopies = (from loan in _context.LoanModel
+                                where loan.DateReturned == null
+                                select loan.CopyNumber).Distinct();
+
+
             var data = from castmembers in _context.CastMemberModel
                        join actor in _context.ActorModel on castmembers.ActorNumber equals actor.ActorNumber
                        where actor.ActorSurname == actorName
                        join dvdtitle in _context.DVDTitleModel
-                       on castmembers.DVDNumber equals dvdtitle.DVDNumber 
+                       on castmembers.DVDNumber equals dvdtitle.DVDNumber
                        select new
                        {
                            Title = dvdtitle.DVDTitle,
@@ -270,17 +276,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                   group actor by new { casts.DVDNumber } into g
                                   select
                                        String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
-                           NumberOfCopies = (from dvdcopy in _context.DVDCopyModel 
-                                           join dt in _context.DVDTitleModel on dvdcopy.DVDNumber equals dt.DVDNumber
-                                           join cm in _context.CastMemberModel on dt.DVDNumber equals cm.DVDNumber
-                                           join a in _context.ActorModel on cm.ActorNumber equals a.ActorNumber
-                                           where a.ActorSurname == actorName
-                                           where dvdcopy.DVDNumber == dvdtitle.DVDNumber
-                                           join l in _context.LoanModel on dvdcopy.CopyNumber equals l.CopyNumber
-                                           where l.DateReturned != null
-                                           select dvdcopy).Count()
-                       }
-                       ;
+                           NumberOfCopies = (from copy in _context.DVDCopyModel
+                                             where !(loanedCopies).Contains(copy.CopyNumber)
+                                             where copy.DVDNumber == dvdtitle.DVDNumber
+                                             select copy).Count()
+                       };
+
+            
+   
             return View(data);
         }
 

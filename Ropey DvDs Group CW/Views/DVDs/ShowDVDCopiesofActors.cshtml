@@ -21,17 +21,22 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-        <td>@item.Title</td>
-        <td>@foreach(var value in item.Cast)
+            @if (@item.NumberOfCopies != 0)
             {
-                <p>@value</p>
+                <tr>
+                    <td>@item.Title</td>
+                    <td>@foreach(var value in item.Cast)
+                        {
+                            <p>@value</p>
+                        }
+                    </td>
+                    <td>
+                        @item.NumberOfCopies
+                    </td>
+                </tr>
             }
-        </td>
-        <td>
-            @item.NumberOfCopies
-        </td>
-        </tr>
-}
+            
+            
+        }
     </tbody>
 </table>
