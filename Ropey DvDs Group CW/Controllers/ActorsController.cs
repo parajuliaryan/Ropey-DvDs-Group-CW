@@ -59,10 +59,19 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(actorModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(actorModel.ActorFirstName == null || actorModel.ActorSurname == null)
+                {
+                    ViewData["DangerAlert"] = "Empty TextFields Detected. Please fill up the TextFields";
+                    return View(actorModel);
+                }
+                else
+                {
+                    _context.Add(actorModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
+            ViewData["DangerAlert"] = "Error Detected! Please Try Again.";
             return View(actorModel);
         }
 
