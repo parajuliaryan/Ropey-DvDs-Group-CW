@@ -249,8 +249,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                   group actor by new { casts.DVDNumber } into g
                                   select
                                        String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
-                       }
-                       ;
+                       };
             return View(data);
         }
 

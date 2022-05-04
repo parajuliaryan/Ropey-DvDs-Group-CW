@@ -191,6 +191,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                     }
                     else
                     {
+                        ViewData["DangerAlert"] = "Return Date must not be less than Due Date";
                         ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
                         ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
                         ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
