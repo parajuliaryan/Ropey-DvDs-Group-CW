@@ -20,11 +20,12 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.DVDCopyModel.CopyNumber)
         </dd>
+
         <dt class = "col-sm-2">
             Member
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MemberModel.MemberFirstName)
+            @Html.DisplayFor(model => model.MemberModel.MemberFirstName) @Html.DisplayFor(model => model.MemberModel.MemberLastName)
         </dd>
         <dt class = "col-sm-2">
             Date Out
