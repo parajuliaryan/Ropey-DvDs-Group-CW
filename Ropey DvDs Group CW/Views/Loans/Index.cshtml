@@ -43,7 +43,7 @@
                 @Html.DisplayFor(modelItem => item.DVDCopyModel.CopyNumber)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MemberModel.MemberFirstName)
+                @(item.MemberModel.MemberFirstName + " " + item.MemberModel.MemberLastName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOut)

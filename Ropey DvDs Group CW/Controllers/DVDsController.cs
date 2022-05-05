@@ -55,6 +55,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             ViewData["CategoryNumber"] = new SelectList(_context.Set<DVDCategoryModel>(), "CategoryNumber", "CategoryDescription");
             ViewData["ProducerNumber"] = new SelectList(_context.Set<ProducerModel>(), "ProducerNumber", "ProducerName");
             ViewData["StudioNumber"] = new SelectList(_context.Set<StudioModel>(), "StudioNumber", "StudioName");
+            //Using LINQ to get Actors data for ListBox
             var data = from actor in _context.ActorModel
                        orderby actor.ActorFirstName,actor.ActorSurname
                        select new
@@ -77,17 +78,21 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Save the DVDTitle Entry to Database
                 _context.Add(dVDTitleModel);
                 await _context.SaveChangesAsync();
+                //Get the DVD Number from the latest entry
                 var latestEntry = (from dvdtitle in _context.DVDTitleModel
                                   orderby dvdtitle.DVDNumber descending
                                   select dvdtitle.DVDNumber).FirstOrDefault();
 
                 foreach(int id in multipleSelect)
                 {
+                    //Create a new object for CastMemberModel
                     CastMemberModel castMemberModel = new CastMemberModel();
                     castMemberModel.DVDNumber = latestEntry;
                     castMemberModel.ActorNumber = id;
+                    //Save the object to Database
                     _context.Add(castMemberModel);
                     await _context.SaveChangesAsync();
 
@@ -95,9 +100,11 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["CategoryNumber"] = new SelectList(_context.Set<DVDCategoryModel>(), "CategoryNumber", "CategoryNumber", dVDTitleModel.CategoryNumber);
             ViewData["ProducerNumber"] = new SelectList(_context.Set<ProducerModel>(), "ProducerNumber", "ProducerNumber", dVDTitleModel.ProducerNumber);
             ViewData["StudioNumber"] = new SelectList(_context.Set<StudioModel>(), "StudioNumber", "StudioNumber", dVDTitleModel.StudioNumber);
+            //Using LINQ to get Actors data for ListBox
             var data = from actor in _context.ActorModel
                        orderby actor.ActorFirstName, actor.ActorSurname
                        select new
@@ -207,25 +214,27 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> DVDDetailsIndex()
         {
+            //Using LINQ to get data of all DVDs 
             var data = from dvdtitle in _context.DVDTitleModel
                        join dvdcategory in _context.DVDCategoryModel on dvdtitle.CategoryNumber equals dvdcategory.CategoryNumber
                        join studio in _context.StudioModel on dvdtitle.StudioNumber equals studio.StudioNumber
                        orderby dvdtitle.DateReleased
                        select new
                        {
-                          Title = dvdtitle.DVDTitle,
-                           Category = dvdcategory.CategoryDescription,
-                           Studio = studio.StudioName,
-                           Producer = dvdtitle.ProducerModel.ProducerName,
-                           Cast = from casts in dvdtitle.CastMembers
-                                  join actor in _context.ActorModel on casts.ActorNumber equals actor.ActorNumber                                  
-                                  group actor by new { casts.DVDNumber } into g
-                                  select
-                                       String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
-                           Release = dvdtitle.DateReleased.ToString("dd MMM yyyy"),
+                            Title = dvdtitle.DVDTitle,
+                            Category = dvdcategory.CategoryDescription,
+                            Studio = studio.StudioName,
+                            Producer = dvdtitle.ProducerModel.ProducerName,
+                            Cast = from casts in dvdtitle.CastMembers
+                                    join actor in _context.ActorModel on casts.ActorNumber equals actor.ActorNumber                                  
+                                    group actor by new { casts.DVDNumber } into g
+                                    select
+                                        String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
+                            Release = dvdtitle.DateReleased.ToString("dd MMM yyyy"),
                        };
+            //Ordering the data by Cast
             data.OrderBy(c => c.Cast);
-            return View(data);
+            return View(await data.ToListAsync());
         }
 
         public async Task<IActionResult> SelectActors(ActorModel actorModel)
@@ -236,7 +245,9 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> ShowDVDsofActors()
         {
+            //Get the Selected Actor's name from the View
             string actorName = Request.Form["actorList"] .ToString();
+            //Get the data of the Selected Actor
             var data = from castmembers in _context.CastMemberModel
                        join actor in _context.ActorModel on castmembers.ActorNumber equals actor.ActorNumber
                        where actor.ActorSurname == actorName join dvdtitle in _context.DVDTitleModel
@@ -249,20 +260,22 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                   group actor by new { casts.DVDNumber } into g
                                   select
                                        String.Join(", ", g.OrderBy(c => c.ActorSurname).Select(x => (x.ActorFirstName + " " + x.ActorSurname))),
-                       }
-                       ;
-            return View(data);
+                       };
+       
+            return View(await data.ToListAsync());
         }
 
         public async Task<IActionResult> ShowDVDCopiesofActors()
         {
+            //Get the Selected Actor's name from the View
             string actorName = Request.Form["actorList"].ToString();
-           
+
+            //Get Distinct Copy Numbers of Loaned DVDs
             var loanedCopies = (from loan in _context.LoanModel
                                 where loan.DateReturned == null
                                 select loan.CopyNumber).Distinct();
 
-
+            //Get the Copies Data 
             var data = from castmembers in _context.CastMemberModel
                        join actor in _context.ActorModel on castmembers.ActorNumber equals actor.ActorNumber
                        where actor.ActorSurname == actorName
@@ -282,31 +295,36 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                              select copy).Count()
                        };
 
-            
-   
-            return View(data);
+            //Get Data of those DVD Copies that has more than 0 copies.
+            data = data.Where(x => x.NumberOfCopies > 0);
+            if(data.Count() == 0)
+            {
+                ViewData["NoData"] = "The Actor has no Copies on our Shelves";
+            }
+            return View(await data.ToListAsync());
         }
 
         public async Task<IActionResult> DVDsNotLoaned()
         {
+            //Get DateTime of 31 Days Before Today's DateTime
             var differenceDate = DateTime.Now.AddDays(-31);
 
+            //Get all data of Loaned Copies in 31 Days
             var loanedCopyIn31Days = (from loan in _context.LoanModel
                                  where loan.DateOut >= differenceDate
                                  select loan.CopyNumber).Distinct();
 
-            var notloanedCopyDVD = (from copy in _context.DVDCopyModel
-                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
-                                    join loan in _context.LoanModel on copy.CopyNumber equals loan.CopyNumber
-                                    where !(loanedCopyIn31Days).Contains(copy.CopyNumber)
-                                    select new
-                                    {
-                                        CopyNumber = copy.CopyNumber,
-                                        Title = dvdtitle.DVDTitle,
-                                        Loan = loan.DateOut,
-                                    });
+            //Get all data of Copies that have not been loaned.
+            var notloanedCopyDVD = from copy in _context.DVDCopyModel
+                                   join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                   where !(loanedCopyIn31Days).Contains(copy.CopyNumber)
+                                   select new
+                                   {
+                                       CopyNumber = copy.CopyNumber,
+                                       Title = dvdtitle.DVDTitle,
+                                   };
 
-            return View(notloanedCopyDVD);
+            return View(await notloanedCopyDVD.ToListAsync());
         }
     }
 }

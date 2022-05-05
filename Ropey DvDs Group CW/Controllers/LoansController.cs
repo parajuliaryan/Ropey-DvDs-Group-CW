@@ -52,7 +52,13 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // GET: Loans/Create
         public IActionResult Create()
         {
-            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber");
+            ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
+                                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                    select new
+                                                    {
+                                                        CopyNumber = copy.CopyNumber,
+                                                        Title = copy.CopyNumber + " - " + dvdtitle.DVDTitle,  
+                                                    }, "CopyNumber", "Title");
             ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
             ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
                                                       select new
@@ -72,6 +78,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Get Details of the Member
                 var memberDOB = from member in _context.MemberModel
                                 join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber
                                 where member.MemberNumber == loanModel.MemberNumber
@@ -81,8 +88,10 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                     totalLoans = membership.MembershipCategoryTotalLoan
 
                                 };
+                //Get the First Data from the Details
                 var data1 = memberDOB.FirstOrDefault();
 
+                //Get Age Restricted data of the DVD 
                 var ageRestricted = from copy in _context.DVDCopyModel
                                     join title in _context.DVDTitleModel on copy.DVDNumber equals title.DVDNumber
                                     join category in _context.DVDCategoryModel on title.CategoryNumber equals category.CategoryNumber
@@ -93,50 +102,78 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                     };
                 var data2 = ageRestricted.FirstOrDefault();
 
+                //Get the Total Loans Taken by a Member
                 var loansTaken = (from loans in _context.LoanModel
                              where loans.MemberNumber == loanModel.MemberNumber
                              select loans).Count();
+                
+                var dvdLoanTaken = (from loans in _context.LoanModel
+                                    where loans.CopyNumber == loanModel.CopyNumber
+                                    where loans.DateReturned == null
+                                    select loans).Count();
 
-                if (loansTaken < data1.totalLoans)
-                {                   
-                        var dt = data1.DateOfBirth;
-                        var today = DateTime.Today;
-                        var age = today.Year - dt.Year;
-
-                        if (dt.Date > today.AddYears(-age)) age--;
-
-                    if (data2.restricted)
+                if(dvdLoanTaken == 0)
+                {
+                    //Check if DateDue is greater than DateOut
+                    if (loanModel.DateDue > loanModel.DateOut)
                     {
-                        if (age >= 18)
+                        //Check if Loans Taken is less than the Loans that can be allowed to be Taken
+                        if (loansTaken < data1.totalLoans)
                         {
-                          
-                            _context.Add(loanModel);
-                            await _context.SaveChangesAsync();
-                            return RedirectToAction(nameof(Index));
+                            var dt = data1.DateOfBirth;
+                            var today = DateTime.Today;
+                            //Get the Age of the Member
+                            var age = today.Year - dt.Year;
+
+                            if (dt.Date > today.AddYears(-age)) age--;
+
+                            //Check Age Restrictions
+                            if (data2.restricted)
+                            {
+                                //Check if age is greater than 18
+                                if (age >= 18)
+                                {
+
+                                    _context.Add(loanModel);
+                                    await _context.SaveChangesAsync();
+                                    return RedirectToAction(nameof(Index));
+                                }
+                                else
+                                {
+                                    //If age is less than 18, send an error alert.
+                                    ViewData["DangerAlert"] = "This user is too young";
+                                }
+                            }
+                            else
+                            {
+                                _context.Add(loanModel);
+                                await _context.SaveChangesAsync();
+                                return RedirectToAction(nameof(Index));
+                            }
                         }
                         else
                         {
-                            ViewData["DangerAlert"] = "This user is too young";
+                            ViewData["DangerAlert"] = "This user can\'t take more loans";
                         }
                     }
                     else
                     {
-                        _context.Add(loanModel);
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
+                        ViewData["DangerAlert"] = "Date Due cannot be smaller than Date Out";
                     }
-
-                        
-                    
-
                 }
                 else
                 {
-                    ViewData["DangerAlert"] = "This user can\'t take more loans";
+                    ViewData["DangerAlert"] = "This Copy has already been loaned";
                 }
 
             }
-            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber");
+            ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
+                                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                    select new
+                                                    {
+                                                        CopyNumber = copy.CopyNumber,
+                                                        Title = copy.CopyNumber + " - " + dvdtitle.DVDTitle,
+                                                    }, "CopyNumber", "Title");
             ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
             ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
                                                       select new
@@ -161,9 +198,20 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 return NotFound();
             }
-            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
-            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
-            ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
+            ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
+                                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                    select new
+                                                    {
+                                                        CopyNumber = copy.CopyNumber,
+                                                        Title = copy.CopyNumber + " - " + dvdtitle.DVDTitle,
+                                                    }, "CopyNumber", "Title");
+            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
+            ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
+                                                      select new
+                                                      {
+                                                          MemberNumber = member.MemberNumber,
+                                                          MemberName = member.MemberFirstName + " " + member.MemberLastName,
+                                                      }, "MemberNumber", "MemberName");
             return View(loanModel);
         }
 
@@ -183,6 +231,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 try
                 {
+                    //Check if DateReturned is greater than DateDue.
                     if((loanModel.DateReturned - loanModel.DateDue).Value.TotalDays >= 0)
                     {
                         _context.Update(loanModel);
@@ -191,9 +240,21 @@ namespace Ropey_DvDs_Group_CW.Controllers
                     }
                     else
                     {
-                        ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
-                        ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
-                        ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
+                        ViewData["DangerAlert"] = "Return Date must not be less than Due Date";
+                        ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
+                                                                join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                                select new
+                                                                {
+                                                                    CopyNumber = copy.CopyNumber,
+                                                                    Title = copy.CopyNumber + " - " + dvdtitle.DVDTitle,
+                                                                }, "CopyNumber", "Title");
+                        ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
+                        ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
+                                                                  select new
+                                                                  {
+                                                                      MemberNumber = member.MemberNumber,
+                                                                      MemberName = member.MemberFirstName + " " + member.MemberLastName,
+                                                                  }, "MemberNumber", "MemberName");
                         return View(loanModel);
                     }
                     
@@ -211,14 +272,26 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CopyNumber"] = new SelectList(_context.Set<DVDCopyModel>(), "CopyNumber", "CopyNumber", loanModel.CopyNumber);
-            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanTypeNumber", loanModel.LoanTypeNumber);
-            ViewData["MemberNumber"] = new SelectList(_context.Set<MemberModel>(), "MemberNumber", "MemberNumber", loanModel.MemberNumber);
+            ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
+                                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
+                                                    select new
+                                                    {
+                                                        CopyNumber = copy.CopyNumber,
+                                                        Title = copy.CopyNumber + " - " + dvdtitle.DVDTitle,
+                                                    }, "CopyNumber", "Title");
+            ViewData["LoanTypeNumber"] = new SelectList(_context.LoanTypeModel, "LoanTypeNumber", "LoanType");
+            ViewData["MemberNumber"] = new SelectList(from member in _context.MemberModel
+                                                      select new
+                                                      {
+                                                          MemberNumber = member.MemberNumber,
+                                                          MemberName = member.MemberFirstName + " " + member.MemberLastName,
+                                                      }, "MemberNumber", "MemberName");
             return View(loanModel);
         }
 
         public async Task<IActionResult> Payment(LoanModel loanModel)
         {
+            //Using LINQ to get Loan Details after returning the DVD Copy
             var loanDetails = (from loans in _context.LoanModel
                                join member in _context.MemberModel on loans.MemberNumber equals member.MemberNumber
                                join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber

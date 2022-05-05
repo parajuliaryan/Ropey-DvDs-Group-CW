@@ -42,7 +42,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 return NotFound();
             }
-
+            //Gets the Latest Loan Taken Details of the Selected DVD Copy
             var latestLoan = from loan in _context.LoanModel          
                              join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
                                      where loan.CopyNumber == id
@@ -51,13 +51,15 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                          MemberName = member.MemberFirstName + " " + member.MemberLastName,
                                          Loan = loan
                                         };
+            //Select the first data from the database response.
             var data = latestLoan.FirstOrDefault();
             if(data != null)
             {
+                //Returning the Loan and Member Details
                 ViewData["loanData"] = data.Loan;
                 ViewData["lastLoanMemberName"] = data.MemberName;
             }       
-            
+            //Returning DVD Copy Details
             return View(dVDCopyModel);
         }
 
@@ -176,11 +178,12 @@ namespace Ropey_DvDs_Group_CW.Controllers
         public async Task<IActionResult> OlderCopyDVD()
         {
 
-
+            //Get Distinct Copy Numbers of Loaned DVDs
             var loanedCopyDVD = (from loan in _context.LoanModel
                                 where loan.DateReturned == null
                                 select loan.CopyNumber).Distinct();
 
+            //Get Data of Copies that have not been loaned
             var notloanedCopyDVD = (from copy in _context.DVDCopyModel
                                    join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
                                    where !(loanedCopyDVD).Contains(copy.CopyNumber)
@@ -196,10 +199,12 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> RemoveOldCopies()
         {
+            //Get Distinct Copy Numbers of Loaned DVDs
             var loanedCopyDVD = (from loan in _context.LoanModel
                                  where loan.DateReturned == null
                                  select loan.CopyNumber).Distinct();
 
+            //Get Data of Copies that have not been loaned
             var notloanedCopyDVD = (from copy in _context.DVDCopyModel
                                     join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
                                     where !(loanedCopyDVD).Contains(copy.CopyNumber)
@@ -212,8 +217,10 @@ namespace Ropey_DvDs_Group_CW.Controllers
             
             foreach(var copy in notloanedCopyDVD.ToList())
             {
+                //Check if the Copy is older than one year.
                 if(DateTime.Now.Subtract(copy.DatePurchased).Days > 365)
                 {
+                    //Remove the Copy from the Database if the Copy is older than one year.
                     var remove = (from removeCopy in _context.DVDCopyModel
                                   where removeCopy.CopyNumber == copy.CopyNumber
                                   select removeCopy).FirstOrDefault();
@@ -221,6 +228,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                    
                 }
             }
+            //Save the changes made to the database.
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -228,11 +236,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
         public async Task<IActionResult> LoanedOutCopies()
         {
  
-
+            //Check if any date has been selected in the view.
             if(Request.Form.Count() == 2 )
             {
+                //Get the Selected Date from the View Form.
                 ViewData["SelectedDate"] = Request.Form["SearchDate"].ToString();
+                //Parse the Selected Date String to DateTime
                 DateTime searchingDate = DateTime.Parse(Request.Form["SearchDate"].ToString());
+                //Get all Loan data which matches Selected Date in DateOut
                 var applicationDBContext = from loan in _context.LoanModel
                                            join copy in _context.DVDCopyModel on loan.CopyNumber equals copy.CopyNumber
                                            join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
@@ -247,6 +258,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                                Member = member.MemberFirstName + " " + member.MemberLastName,
                                                DateOut = loan.DateOut
                                            };
+                //Count the total Loans of that Selected Date and send to the View as ViewData
                 ViewData["TotalLoans"] = applicationDBContext.ToList().Count();
 
                 return View(await applicationDBContext.ToListAsync());
@@ -254,13 +266,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
             }
             else
             {
+                //If no Date has been Selected, Use Today's DateTime
                 ViewData["SelectedDate"] = DateTime.Today.ToString("yyyy-MM-dd");
+                //Get all Loan data which matches Selected Date in DateOut
                 var applicationDBContext = from loan in _context.LoanModel
                                            join copy in _context.DVDCopyModel on loan.CopyNumber equals copy.CopyNumber
                                            join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
                                            join member in _context.MemberModel on loan.MemberNumber equals member.MemberNumber
-                                           orderby loan.DateOut
-                                           where loan.DateReturned == null
+                                           orderby loan.DateOut                                          
                                            where loan.DateOut.Date == DateTime.Today.Date
                                            select new
                                            {
@@ -270,6 +283,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                                Member = member.MemberFirstName + " " + member.MemberLastName,
                                                DateOut = loan.DateOut
                                            };
+                //Count the total Loans of that Selected Date and send to the View as ViewData
                 ViewData["TotalLoans"] = applicationDBContext.ToList().Count();
 
                 return View(await applicationDBContext.ToListAsync());

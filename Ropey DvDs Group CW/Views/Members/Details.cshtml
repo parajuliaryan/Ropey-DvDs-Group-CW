@@ -4,41 +4,75 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Member Details</h1>
 
 <div>
-    <h4>MemberModel</h4>
     <hr />
     <dl class="row">
-        @foreach (var item in Model)
-        {
-            <dt class = "col-sm-2">
-                Member Name
-            </dt>
-            <dd class = "col-sm-10">
-               @item.Member
-            </dd>
-            <dt class = "col-sm-2">
-               Loan
-            </dt>
-            <dd class = "col-sm-10">
-               @item.Loan
-            </dd>
-            <dt class = "col-sm-2">
-                DVD Title
-            </dt>
-            <dd class = "col-sm-10">
-               @item.Title
-            </dd>
-            <dt class = "col-sm-2">
-                Copy Number
-            </dt>
-            <dd class = "col-sm-10">
-               @item.CopyNumber
-            </dd>
-            <hr />
-        }
+        <dt class = "col-sm-2">
+            Member Name
+        </dt>
+        <dd class = "col-sm-10">
+            @(ViewBag.Member.MemberFirstName + " " + ViewBag.Member.MemberLastName) 
+        </dd>
+        <dt class = "col-sm-2">
+            Member DOB
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.Member.MemberDateOfBirth)
+        </dd>
+        <dt class = "col-sm-2">
+            Member Address
+        </dt>
+        <dd class = "col-sm-10">
+            @ViewBag.Member.MemberAddress)
+        </dd>
+        
     </dl>
+    <hr />
+    <h4>Loans Taken by this Member in the last 31 Days</h4>
+    <table class="table">
+    <thead>
+        <tr>
+            <th>
+                Loan Number
+            </th>
+            <th>
+                Copy Number
+            </th>
+            <th>
+               DVD Title
+            </th>
+            <th>
+               Date Out
+            </th>
+            <th>
+               Date Returned
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model){
+        <tr>
+            <td>
+                @item.Loan
+            </td>
+            <td>
+                @item.CopyNumber
+            </td>
+            <td>
+                @item.Title
+            </td>   
+            <td>
+                @item.DateOut
+            </td> 
+            <td>
+                @item.DateReturn
+            </td> 
+        </tr>
+    }
+    </tbody>
+</table>
 </div>
 <div>
     <a asp-action="Index">Back to List</a>
