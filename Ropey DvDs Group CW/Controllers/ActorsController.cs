@@ -61,6 +61,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 if(actorModel.ActorFirstName == null || actorModel.ActorSurname == null)
                 {
+                    //Send Alert ViewData to Layout.cshtml if any error occurs
                     ViewData["DangerAlert"] = "Empty TextFields Detected. Please fill up the TextFields";
                     return View(actorModel);
                 }

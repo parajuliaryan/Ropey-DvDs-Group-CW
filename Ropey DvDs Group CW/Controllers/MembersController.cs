@@ -24,6 +24,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         // GET: Members
         public async Task<IActionResult> Index()
         {
+            //Using LINQ to get Member Details
             var applicationDBContext = from members in _context.MemberModel
                                        join membership in _context.MembershipCategoryModel on members.MembershipCategoryNumber equals membership.MembershipCategoryNumber
                                        select new
@@ -50,12 +51,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 return NotFound();
             }
-
+            //Get Member Deatils
             var memberModel = await _context.MemberModel
                 .Include(m => m.membershipCategoryModel)
                 .FirstOrDefaultAsync(m => m.MemberNumber == id);
 
+            //Get DateTime of 31 Days Before Today's DateTime
             var differenceDate = DateTime.Now.AddDays(-31);
+            //Get all data of loan details within the 31 days period
             var data = from member in _context.MemberModel join
                         loan in _context.LoanModel on member.MemberNumber equals loan.MemberNumber
                         where loan.DateOut >= differenceDate
@@ -64,10 +67,11 @@ namespace Ropey_DvDs_Group_CW.Controllers
                         join dvdtitle in _context.DVDTitleModel on dvdcopy.DVDNumber equals dvdtitle.DVDNumber
                         select new
                         {
-                            Member = member.MemberFirstName + " " + member.MemberLastName,
                             Loan = loan.LoanNumber,
                             CopyNumber = dvdcopy.CopyNumber,
                             Title = dvdtitle.DVDTitle,
+                            DateOut = loan.DateOut,
+                            DateReturn = loan.DateReturned
                         };
 
             if (memberModel == null)
@@ -77,10 +81,12 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
             if (data == null )
             {
+                ViewData["Member"] = memberModel;
                 return View(memberModel);
             }
             else
             {
+                ViewData["Member"] = memberModel;
                 return View(data);
             }
 
@@ -201,11 +207,13 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> SleepingMembers()
         {
+            //Get DateTime of 31 Days Before Today's DateTime
             var differenceDate = DateTime.Now.AddDays(-31);
+            //Get Data of Loans Taken 31 Days from Current Date
             var loanTakenByMembers = (from loans in _context.LoanModel
                                      where loans.DateOut >= differenceDate
                                      select loans.MemberNumber).Distinct();
-
+            //Get Data of DVD Copies which has not been loaned
             var loanNotTakenByMembers = from members in _context.MemberModel                                       
                                         where !(loanTakenByMembers).Contains(members.MemberNumber)
                                         select new
@@ -225,7 +233,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                                         ).FirstOrDefault()
                                         };
 
-            return View(loanNotTakenByMembers);
+            return View(await loanNotTakenByMembers.ToListAsync());
         }
     }
 }

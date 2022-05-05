@@ -65,15 +65,15 @@
             @Model.LoanType
         </dd>
         <dt class = "col-sm-2">
-            Standard Charge
+            Standard Charge (per Day @Model.StandardCharge)
         </dt>
         <dd class = "col-sm-10">
-            @Model.StandardCharge
+            @(Model.StandardCharge * Model.LoanDuration)
         </dd>
         @if (Model.DateReturned.Subtract(Model.DateOut).Days > Model.LoanDuration)
         {
             <dt class = "col-sm-2">
-            Penalty Charge
+            Penalty Charge (per Day @Model.PenaltyCharge)
         </dt>
         <dd class = "col-sm-10">
             @((Model.DateReturned.Subtract(Model.DateOut).Days - Model.LoanDuration ) * Model.PenaltyCharge)

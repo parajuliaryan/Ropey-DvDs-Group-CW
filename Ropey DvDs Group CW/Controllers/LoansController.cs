@@ -72,6 +72,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             if (ModelState.IsValid)
             {
+                //Get Details of the Member
                 var memberDOB = from member in _context.MemberModel
                                 join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber
                                 where member.MemberNumber == loanModel.MemberNumber
@@ -81,8 +82,10 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                     totalLoans = membership.MembershipCategoryTotalLoan
 
                                 };
+                //Get the First Data from the Details
                 var data1 = memberDOB.FirstOrDefault();
 
+                //Get Age Restricted data of the DVD 
                 var ageRestricted = from copy in _context.DVDCopyModel
                                     join title in _context.DVDTitleModel on copy.DVDNumber equals title.DVDNumber
                                     join category in _context.DVDCategoryModel on title.CategoryNumber equals category.CategoryNumber
@@ -93,46 +96,56 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                     };
                 var data2 = ageRestricted.FirstOrDefault();
 
+                //Get the Total Loans Taken by a Member
                 var loansTaken = (from loans in _context.LoanModel
                              where loans.MemberNumber == loanModel.MemberNumber
                              select loans).Count();
-
-                if (loansTaken < data1.totalLoans)
-                {                   
+                
+                //Check if DateDue is greater than DateOut
+                if(loanModel.DateDue > loanModel.DateOut)
+                {
+                    //Check if Loans Taken is less than the Loans that can be allowed to be Taken
+                    if (loansTaken < data1.totalLoans)
+                    {
                         var dt = data1.DateOfBirth;
                         var today = DateTime.Today;
+                        //Get the Age of the Member
                         var age = today.Year - dt.Year;
 
                         if (dt.Date > today.AddYears(-age)) age--;
 
-                    if (data2.restricted)
-                    {
-                        if (age >= 18)
+                        //Check Age Restrictions
+                        if (data2.restricted)
                         {
-                          
+                            //Check if age is greater than 18
+                            if (age >= 18)
+                            {
+
+                                _context.Add(loanModel);
+                                await _context.SaveChangesAsync();
+                                return RedirectToAction(nameof(Index));
+                            }
+                            else
+                            {
+                                //If age is less than 18, send an error alert.
+                                ViewData["DangerAlert"] = "This user is too young";
+                            }
+                        }
+                        else
+                        {
                             _context.Add(loanModel);
                             await _context.SaveChangesAsync();
                             return RedirectToAction(nameof(Index));
                         }
-                        else
-                        {
-                            ViewData["DangerAlert"] = "This user is too young";
-                        }
                     }
                     else
                     {
-                        _context.Add(loanModel);
-                        await _context.SaveChangesAsync();
-                        return RedirectToAction(nameof(Index));
+                        ViewData["DangerAlert"] = "This user can\'t take more loans";
                     }
-
-                        
-                    
-
                 }
                 else
                 {
-                    ViewData["DangerAlert"] = "This user can\'t take more loans";
+                    ViewData["DangerAlert"] = "Date Due cannot be smaller than Date Out";
                 }
 
             }
@@ -183,6 +196,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             {
                 try
                 {
+                    //Check if DateReturned is greater than DateDue.
                     if((loanModel.DateReturned - loanModel.DateDue).Value.TotalDays >= 0)
                     {
                         _context.Update(loanModel);
@@ -220,6 +234,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public async Task<IActionResult> Payment(LoanModel loanModel)
         {
+            //Using LINQ to get Loan Details after returning the DVD Copy
             var loanDetails = (from loans in _context.LoanModel
                                join member in _context.MemberModel on loans.MemberNumber equals member.MemberNumber
                                join membership in _context.MembershipCategoryModel on member.MembershipCategoryNumber equals membership.MembershipCategoryNumber

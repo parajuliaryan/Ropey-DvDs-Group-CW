@@ -32,8 +32,6 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         public IActionResult UserDetails(UserDetailsViewModel userDetails)
         {
-            //Retrieving Token Cookies and Send them through ViewBag
-            //ViewBag.token = Request.Cookies["token"];
             return View(userDetails);
         }
 

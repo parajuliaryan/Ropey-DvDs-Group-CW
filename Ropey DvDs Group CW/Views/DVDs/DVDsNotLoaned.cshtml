@@ -3,28 +3,26 @@
     ViewData["Title"] = "DVDsNotLoaned";
 }
 
-<h1>DVDsNotLoaned</h1>
+<h1>DVDs Not Loaned</h1>
+<h4>Displaying a list of all DVD titles in the shop where no copy of the title has been loaned in the last 31 days</h4>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Title
+                Copy Number
             </th>
             <th>
-                Date Out
-            </th>
-            <th>
-               Copy Number
+                DVD Title
             </th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-        <td>@item.Title</td>
-        <td>@item.Loan</td>
         <td>@item.CopyNumber</td>
+        <td>@item.Title</td>
+
         </tr>
 }
     </tbody>

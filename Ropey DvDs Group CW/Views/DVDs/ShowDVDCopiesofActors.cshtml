@@ -3,9 +3,15 @@
     ViewData["Title"] = "ShowDVDCopiesofActors";
 }
 
-<h1>ShowDVDCopiesofActors</h1>
+<h1>Show DVD Copies of Actors</h1>
 
-<table class="table">
+@if(ViewBag.NoData != null)
+{
+    <h3>@ViewBag.NoData</h3>
+}
+else
+{
+    <table class="table">
     <thead>
         <tr>
             <th>
@@ -21,8 +27,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-            @if (@item.NumberOfCopies != 0)
-            {
+           
                 <tr>
                     <td>@item.Title</td>
                     <td>@foreach(var value in item.Cast)
@@ -34,9 +39,12 @@
                         @item.NumberOfCopies
                     </td>
                 </tr>
-            }
+            
             
             
         }
+
+       
     </tbody>
 </table>
+}
