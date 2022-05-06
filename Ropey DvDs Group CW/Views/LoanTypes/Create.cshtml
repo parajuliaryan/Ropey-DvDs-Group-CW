@@ -4,10 +4,11 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center">Create Loan Type</h1>
-<hr />
+
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h4 class="text-center">Create Loan Type</h4>
+                <hr />
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -21,11 +22,11 @@
                 <span asp-validation-for="LoanDuration" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>
-</div>
+</div> 
 
 <div>
     <a asp-action="Index">Back to List</a>

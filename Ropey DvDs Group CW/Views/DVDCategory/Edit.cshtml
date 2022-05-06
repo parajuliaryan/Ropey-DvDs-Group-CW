@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Edit DVD Category</h1>
 
-<hr />
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h4>Edit DVD Category</h4>
+            <hr />
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="CategoryNumber" />
@@ -17,13 +17,13 @@
                 <input asp-for="CategoryDescription" class="form-control" />
                 <span asp-validation-for="CategoryDescription" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
+            <div class="form-group form-check mt-3">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="AgeRestricted" /> Age Restricted
                 </label>
             </div>
             <div class="form-group mt-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>

@@ -4,12 +4,14 @@
     ViewData["Title"] = "Register Admin";
 }
 
-<h1 class="text-center">Register Admin</h1>
 
-<h4 class="text-center" style="text-decoration:underline">UserRegisterModel</h4>
-<hr />
+
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        
+       <h1 class="text-center">Register Admin</h1>
+        <h4 class="text-center pt-3" style="text-decoration:underline">UserRegisterModel</h4>
+            <hr />
         <form asp-action="RegisterAdmin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
