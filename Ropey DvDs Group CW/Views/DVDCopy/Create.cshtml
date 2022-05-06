@@ -4,12 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
 
-<h4>DVD Copy</h4>
-<hr />
+
+<h4 class="text-center">DVD Copy</h4>
+
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h1 class="text-center">Create</h1>
+        <hr />
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -21,7 +23,7 @@
                 <input asp-for="DatePurchased" class="form-control" />
                 <span asp-validation-for="DatePurchased" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-3">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

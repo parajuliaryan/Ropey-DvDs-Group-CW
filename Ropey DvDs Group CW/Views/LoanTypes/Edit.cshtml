@@ -4,11 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Edit Loan Type</h1>
 
-<hr />
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h4>Edit Loan Type</h4>
+            <hr />
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="LoanTypeNumber" />
@@ -23,7 +23,7 @@
                 <span asp-validation-for="LoanDuration" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>

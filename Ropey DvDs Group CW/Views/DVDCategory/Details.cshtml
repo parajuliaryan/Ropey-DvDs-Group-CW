@@ -4,25 +4,26 @@
     ViewData["Title"] = "Details";
 }
 
-<div>
+<div class="col-md-4 mx-auto card mt-5 p-5">
     <h4>DVD Category Details</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-7">
             Category Description
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.DisplayFor(model => model.CategoryDescription)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-7">
             Age Restricted Check
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-5">
             @Html.DisplayFor(model => model.AgeRestricted)
         </dd>
     </dl>
+    <a class="btn btn-primary-edit" asp-action="Edit" asp-route-id="@Model?.CategoryNumber">Edit</a> 
 </div>
 <div>
-    <a class="btn btn-primary-edit" asp-action="Edit" asp-route-id="@Model?.CategoryNumber">Edit</a> |
+    
     <a asp-action="Index">Back to List</a>
 </div>

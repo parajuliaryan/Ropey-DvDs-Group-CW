@@ -3,11 +3,11 @@
     ViewData["Title"] = "LoanedOutCopies";
 }
 
-<h1>LoanedOutCopies</h1>
+<h1 class="text-center">LoanedOutCopies</h1>
 
 <form asp-action="LoanedOutCopies">
     <input type="date" value="@ViewBag.SelectedDate" name="SearchDate" /> 
-    <button type="submit">Search by Date</button>
+    <button class="btn btn-primary" type="submit">Search by Date</button>
 </form>
 <p>Total Loans taken at @ViewBag.SelectedDate : @ViewBag.TotalLoans</p>
 <table class="table">

@@ -4,12 +4,9 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
-
-<h4>DVD Title</h4>
-<hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h1 class="text-center">Create</h1><h4 class="text-center" style="text-decoration:underline">DVD Title</h4><hr />
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -54,8 +51,8 @@
                     }
                 </select>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="form-group mt-3">
+                <input type="submit" value="Create" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>

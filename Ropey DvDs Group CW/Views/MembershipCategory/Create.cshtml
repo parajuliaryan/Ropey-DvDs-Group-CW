@@ -4,11 +4,12 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center">Create Membership Category</h1>
 
-<hr />
 <div class="row">
-    <div class="col-md-4 mx-auto">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h1 class="text-center">Create Membership Category</h1>
+
+        <hr />
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -22,7 +23,7 @@
                 <span asp-validation-for="MembershipCategoryTotalLoan" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>

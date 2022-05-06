@@ -4,12 +4,13 @@
     ViewData["Title"] = "Create";
 }
 
-<h1 class="text-center">Create Actor</h1>
 
-<hr />
+
+
 <div class="row">
-    <div class="col-md-4 mx-auto">
-        <form asp-action="Create">
+    <div class="col-md-4 mx-auto card mt-5 pt-4 p-5">
+        <h1 class="text-center">Create Actor</h1>
+        <form asp-action="Create"><hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Actor's First Name</label>
@@ -22,7 +23,7 @@
                 <span asp-validation-for="ActorSurname" class="text-danger"></span>
             </div>
             <div class="form-group mt-3">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary btn-danger" />
             </div>
         </form>
     </div>
