@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "ViewUserDetails";
+}
+
+<h1>ViewUserDetails</h1>
+<a class="btn btn-success" asp-action="CreateUser">Create New</a> 
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                User Name
+            </th>
+            <th>
+               Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @item.UserName
+            </td>
+            <td>
+                @item.Email
+            </td>
+            <td>
+                <a class="btn btn-primary-edit" asp-action="EditUser" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn btn-primary-delete" asp-action="DeleteUser" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
