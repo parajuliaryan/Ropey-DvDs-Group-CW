@@ -115,6 +115,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Assistant))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Assistant));
+
+
+            if (await _roleManager.RoleExistsAsync(UserRoles.Assistant))
+            {
+                await _userManager.AddToRoleAsync(user, UserRoles.Assistant);
+            }
             return RedirectToAction("Index", "Home");
         }
 
@@ -143,18 +151,13 @@ namespace Ropey_DvDs_Group_CW.Controllers
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
-            if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
-            if (!await _roleManager.RoleExistsAsync(UserRoles.User))
-                await _roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+            if (!await _roleManager.RoleExistsAsync(UserRoles.Manager))
+                await _roleManager.CreateAsync(new IdentityRole(UserRoles.Manager));
+            
 
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
+            if (await _roleManager.RoleExistsAsync(UserRoles.Manager))
             {
-                await _userManager.AddToRoleAsync(user, UserRoles.Admin);
-            }
-            if (await _roleManager.RoleExistsAsync(UserRoles.Admin))
-            {
-                await _userManager.AddToRoleAsync(user, UserRoles.User);
+                await _userManager.AddToRoleAsync(user, UserRoles.Manager);
             }
             return RedirectToAction("Index", "Home");
 
