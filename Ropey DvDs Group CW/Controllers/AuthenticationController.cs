@@ -79,7 +79,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 loginCookies.Expires = userDetails.Expiration;
                 Response.Cookies.Append("Token", userDetails.Token);
 
-                if (userRoles.Contains("Admin"))
+                if (userRoles.Contains("Manager"))
                 {
                     return RedirectToAction("Index", "AdminDashboard");
                 }
