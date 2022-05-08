@@ -13,7 +13,7 @@ using Ropey_DvDs_Group_CW.Models;
 
 namespace Ropey_DvDs_Group_CW.Controllers
 {
-    //[Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class LoansController : Controller
     {
         private readonly ApplicationDBContext _context;
