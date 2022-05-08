@@ -13,7 +13,7 @@ using Ropey_DvDs_Group_CW.Models;
 
 namespace Ropey_DvDs_Group_CW.Controllers
 {
-    [Authorize(Roles = "Manager", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class DVDsController : Controller
     {
         private readonly ApplicationDBContext _context;
@@ -240,12 +240,14 @@ namespace Ropey_DvDs_Group_CW.Controllers
             return View(await data.ToListAsync());
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> SelectActors(ActorModel actorModel)
         {
             ViewData["ActorSurname"] = new SelectList(_context.Set<ActorModel>(), "ActorSurname", "ActorSurname", actorModel.ActorSurname);
             return View();
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> ShowDVDsofActors()
         {
             //Get the Selected Actor's name from the View
@@ -268,6 +270,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             return View(await data.ToListAsync());
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> ShowDVDCopiesofActors()
         {
             //Get the Selected Actor's name from the View

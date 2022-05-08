@@ -26,24 +26,15 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="RegisterAdmin">Register Admin</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="RegisterAdmin">Register Manager</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register User</a>
-                        </li>
-                        @if (!User.Identity.IsAuthenticated)
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Manager"))
                         {
-                           <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
-                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Register">Register Assistant</a>
+                            </li> 
                         }
-                        else
-                        {
-                           <li class="nav-item">
-                             <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
-                           </li>
-                        }
-
+           
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDDetailsIndex">DVD Details</a>
                         </li>
@@ -53,6 +44,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDsNotLoaned">Non loaned DVDs</a>
                         </li>
+
                         @if (User.Identity.IsAuthenticated)
                         {
                            <li class="nav-item">

@@ -9,7 +9,7 @@ using Ropey_DvDs_Group_CW.Service;
 
 namespace Ropey_DvDs_Group_CW.Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme )]
+     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UserController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -25,17 +25,21 @@ namespace Ropey_DvDs_Group_CW.Controllers
             _userService = userService;
             _roleManager = roleManager;
         }
+
+        [Authorize(Roles ="Manager, Assistant")]
         public IActionResult Profile()
         {
             return View();
         }
 
+        [Authorize(Roles = "Manager, Assistant")]
         public IActionResult PasswordChange()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Manager, Assistant")]
         public async Task<IActionResult> ChangePassword(UpdatePassword model)
         {
             var authUser = _userService.GetUser();
@@ -52,6 +56,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
             }
         }
 
+        [Authorize(Roles = "Manager")]
         public IActionResult ViewUsers()
         {
                 var users = _userManager.Users.Select(c => new UserDetailsViewModel()
@@ -63,6 +68,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 return View(users);
         }
 
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> EditUser(string id)
         {
             UpdateUserDetails updateUserDetails = new UpdateUserDetails();
@@ -82,7 +88,9 @@ namespace Ropey_DvDs_Group_CW.Controllers
         }
 
 
+
         [HttpPost]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateUser(string id, UpdateUserDetails detailModel)
         {
             if (id == null)
@@ -114,6 +122,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         }
 
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteUser(string? id)
         {
             UpdateUserDetails updateUserDetails = new UpdateUserDetails();
@@ -135,14 +144,15 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteConfirmed(string? id)
         {
             var user = await _userManager.FindByIdAsync(id);
             var result = _userManager.DeleteAsync(user);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index)); //show message
         }
 
-
+        [Authorize(Roles = "Manager")]
         public IActionResult CreateUser()
         {
             return View();
@@ -150,6 +160,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> StoreUser(UserRegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
