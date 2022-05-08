@@ -47,6 +47,12 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDsNotLoaned">Non loaned DVDs</a>
                             </li>
+                        }
+                       
+                        
+                    </ul>
+                    <ul class="navbar-nav" style="position:absolute;right:30px">
+                        @if(User.Identity.IsAuthenticated){
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="AdminDashboard" asp-action="Index">Dashboard</a>
                             </li>
@@ -54,19 +60,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
                             </li>
                         }
-                       
+
                         @if(!User.Identity.IsAuthenticated){
                             <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
                             </li>
                         }
+
                         @if (User.Identity.IsAuthenticated)
                         {
                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
                             </li>
                         }
-                        
                     </ul>
                 </div>
             </div>
