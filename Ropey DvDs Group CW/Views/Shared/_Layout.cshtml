@@ -44,22 +44,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDsNotLoaned">Non loaned DVDs</a>
                         </li>
-                        
-                        <div>
-                            @if (!User.Identity.IsAuthenticated)
-                            {
-                               <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
-                                </li>
-                            }
-                            else
-                            {
-                               <li class="nav-item">
-                                 <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
-                               </li>
-                            }
-                        </div>
 
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                           <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Logout">Logout</a>
+                            </li>
+                        }
+                        
                     </ul>
                 </div>
             </div>
