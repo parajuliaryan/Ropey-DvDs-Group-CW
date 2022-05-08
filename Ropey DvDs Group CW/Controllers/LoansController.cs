@@ -125,6 +125,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                             //Get the Age of the Member
                             var age = today.Year - dt.Year;
 
+                            //Checks Leap Year and if it is a leap year, remove a year from age.
                             if (dt.Date > today.AddYears(-age)) age--;
 
                             //Check Age Restrictions
@@ -133,7 +134,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                                 //Check if age is greater than 18
                                 if (age >= 18)
                                 {
-
+                                    //Add Loan to the Database
                                     _context.Add(loanModel);
                                     await _context.SaveChangesAsync();
                                     return RedirectToAction(nameof(Index));
