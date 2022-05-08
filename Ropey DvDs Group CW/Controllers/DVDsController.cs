@@ -241,9 +241,9 @@ namespace Ropey_DvDs_Group_CW.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> SelectActors(ActorModel actorModel)
+        public async Task<IActionResult> SelectActors()
         {
-            ViewData["ActorSurname"] = new SelectList(_context.Set<ActorModel>(), "ActorSurname", "ActorSurname", actorModel.ActorSurname);
+            ViewData["ActorSurname"] = new SelectList(_context.Set<ActorModel>(), "ActorSurname", "ActorSurname");
             return View();
         }
 

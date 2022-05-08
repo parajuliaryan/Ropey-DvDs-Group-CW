@@ -81,7 +81,8 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
                 if (userRoles.Contains("Manager"))
                 {
-                    return RedirectToAction("Index", "AdminDashboard");
+                    return RedirectToAction("UserDetails", userDetails);
+                    //return RedirectToAction("Index", "AdminDashboard");
                 }
                 else
                 {
