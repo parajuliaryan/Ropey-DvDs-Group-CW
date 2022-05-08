@@ -3,6 +3,7 @@ using Ropey_DvDs_Group_CW.Models.Identity;
 using Ropey_DvDs_Group_CW.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Web;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,6 +16,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
+    
 
         public AuthenticationController(
             UserManager<IdentityUser> userManager,
@@ -182,6 +184,21 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 );
 
             return token;
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            if (Request.Cookies["Token"] != null)
+            {
+                //Creating new Cookie Option
+                CookieOptions cookieOptions = new CookieOptions();
+                //Setting new Cookie Expire Time
+                cookieOptions.Expires = DateTime.Now.AddSeconds(-1);
+                //Adding new CookieOption to existing Cookie
+                Response.Cookies.Append("Token","",cookieOptions);
+            }
+            //Returning to Home Page
+            return Redirect("https://localhost:7284/");
         }
     }
 }
