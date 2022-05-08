@@ -198,7 +198,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 Response.Cookies.Append("Token","",cookieOptions);
             }
             //Returning to Home Page
-            return Redirect("https://localhost:7284/");
+            return RedirectToAction("Index","Home");
         }
     }
 }
