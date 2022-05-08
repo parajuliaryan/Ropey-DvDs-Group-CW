@@ -106,3 +106,34 @@ img, svg {
     border-radius: .25rem;
     box-shadow: 5px 10px #00b0b11f;
 }
+.footer-copyright {
+    background-color: #ffffff3d;
+}
+.cyan {
+    background-color: #00b0b1;
+}
+body{
+    margin-bottom: 0px;
+}
+.text-white{
+    color:white !important;
+}
+main{
+    min-height:68.9vh;
+}
+
+.home {
+    background-image: url('/img/home page.png');
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    margin-top: -17px;
+    
+    
+    left: 0px;
+}
+
+.home-titles{
+    margin-top:250px;
+
+}

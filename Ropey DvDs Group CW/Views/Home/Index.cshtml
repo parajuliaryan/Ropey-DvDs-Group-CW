@@ -1,10 +1,17 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="wrapper d-flex flex-column align-items-center justify-content-center" style="width: 100%; height: 80vh;">
-    <div class="text-center container" style="background: #ffffff; box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px; padding:30px;">
-    <h1 class="display-4 font-weight-bold">Welcome to Ropey DvDs</h1>
-     <p class="display-6">A store where you can rent your favourite DVDs</p>
+<!-- Background image -->
+<div class="home">
+<div class="home-titles text-white text-center">
+   <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src = "~/img/ropey.png"/>
+                </a>
+  <h3>Buy all of your favourite DVDs <br/> from a store of your choice <br/> All in One Place</h3>
+  <div class="form-group mt-3">
+      <a class="btn btn-primary" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
+             
 </div>
 </div>
+
 

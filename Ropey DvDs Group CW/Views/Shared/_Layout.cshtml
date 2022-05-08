@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Ropey_DvDs_Group_CW</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/Ropey_DvDs_Group_CW.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -107,6 +107,41 @@
             @RenderBody()
         </main>
     </div>
+    <!-- Footer -->
+<footer class="page-footer font-small cyan darken-3">
+
+  <!-- Footer Elements -->
+  <div class="container">
+
+    <!-- Grid row-->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-12 pt-3">
+        <div class="mb-1 text-center">
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src = "~/img/ropey.png"/>
+                </a>
+            <p class="text-white"> A store where you can rent your favourite DVDs </p>
+ 
+        </div>
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row-->
+
+  </div>
+  <!-- Footer Elements -->
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center text-white py-3">© 2022 Copyright: Ropey DVDs 
+    
+  </div>
+  <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
