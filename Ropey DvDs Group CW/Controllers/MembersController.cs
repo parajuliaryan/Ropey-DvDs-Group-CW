@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +14,7 @@ using Ropey_DvDs_Group_CW.Models;
 
 namespace Ropey_DvDs_Group_CW.Controllers
 {
+    [Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MembersController : Controller
     {
         private readonly ApplicationDBContext _context;
