@@ -35,16 +35,31 @@
                             </li> 
                         }
            
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDDetailsIndex">DVD Details</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="SelectActors">Actors DVDs</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDsNotLoaned">Non loaned DVDs</a>
-                        </li>
-
+                        
+                        @if(User.Identity.IsAuthenticated){
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDDetailsIndex">DVD Details</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="DVDs" asp-action="DVDsNotLoaned">Non loaned DVDs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="AdminDashboard" asp-action="Index">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Profile">Profile</a>
+                            </li>
+                        }
+                       
+                        @if(!User.Identity.IsAuthenticated){
+                            <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Authentication" asp-action="Login">Login</a>
+                            </li>
+                        }
                         @if (User.Identity.IsAuthenticated)
                         {
                            <li class="nav-item">
@@ -63,6 +78,24 @@
             {
                 <div class="alert alert-danger">
                     @ViewBag.DangerAlert
+                </div>
+            }
+            @if(ViewBag.SuccessAlert != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.SuccessAlert
+                </div>
+            }
+            @if(TempData["DangerAlert"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["DangerAlert"]
+                </div>
+            }
+            @if(TempData["SuccessAlert"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["SuccessAlert"]
                 </div>
             }
             @RenderBody()

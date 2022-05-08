@@ -6,6 +6,11 @@
 }
 @if (User.IsInRole("Manager"))
 {
-    <a class="text-danger" asp-area="" asp-controller="User" asp-action="ViewUsers">View Users</a>
+    <a class="text-danger" asp-area="" asp-controller="User" asp-action="ViewUsers">
+        <button class="btn btn-primary">View Users</button>
+    </a>
+    
 }
-<a class="text-danger" asp-area="" asp-controller="User" asp-action="PasswordChange">Change Password</a>
+<a class="text-danger" asp-area="" asp-controller="User" asp-action="PasswordChange">
+    <button class="btn btn-primary">Change Password</button>
+</a>

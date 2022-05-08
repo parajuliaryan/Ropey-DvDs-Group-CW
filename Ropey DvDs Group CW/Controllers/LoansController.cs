@@ -13,7 +13,7 @@ using Ropey_DvDs_Group_CW.Models;
 
 namespace Ropey_DvDs_Group_CW.Controllers
 {
-    [Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    //[Authorize(Roles = "Manager,Assistant", AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class LoansController : Controller
     {
         private readonly ApplicationDBContext _context;
@@ -274,7 +274,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
             ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
                                                     join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber
