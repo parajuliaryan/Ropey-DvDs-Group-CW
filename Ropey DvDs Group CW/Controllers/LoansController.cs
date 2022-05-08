@@ -274,7 +274,7 @@ namespace Ropey_DvDs_Group_CW.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                
             }
             ViewData["CopyNumber"] = new SelectList(from copy in _context.DVDCopyModel
                                                     join dvdtitle in _context.DVDTitleModel on copy.DVDNumber equals dvdtitle.DVDNumber

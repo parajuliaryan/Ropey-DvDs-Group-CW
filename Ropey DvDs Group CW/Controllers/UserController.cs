@@ -48,11 +48,13 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
             if (result.Succeeded)
             {
-                return View(); //without error
+                TempData["SuccessAlert"] = "Password changed successfully";
+                return RedirectToAction("Profile"); //without error
             }
             else
             {
-                return View(); //with error
+                TempData["DangerAlert"] = "Password couldn\'t be changed";
+                return RedirectToAction("Profile"); //with error
             }
         }
 
@@ -84,6 +86,9 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 return NotFound();
             }
             updateUserDetails.User = user;
+            ViewData["Username"] = user.UserName;
+            ViewData["Email"] = user.Email;
+            
             return View(updateUserDetails);
         }
 
@@ -107,15 +112,27 @@ namespace Ropey_DvDs_Group_CW.Controllers
                 var result = await _userManager.ChangePasswordAsync(user, detailModel.CurrentPassword, detailModel.NewPassword);
                 user.UserName = detailModel.UserName;
                 user.Email = detailModel.Email;
-                var result2 = _userManager.UpdateAsync(user);
+                
 
-                if (result.Succeeded && result2.IsCompleted)
+                if (result.Succeeded)
                 {
-                    return View(); //without error
+                    var result2 = _userManager.UpdateAsync(user);
+                    if (result2.IsCompleted)
+                    {
+                        TempData["SuccessAlert"] = "User Details was updated successfully.";
+
+                        return RedirectToAction("ViewUsers");  //without error
+                    }
+                    else{
+                        TempData["SuccessAlert"] = "User Details wasn\'t updated.";
+                        return RedirectToAction("ViewUsers");  //without error
+                    }
+                    
                 }
                 else
                 {
-                    return View(); //with error
+                    TempData["DangerAlert"] = "Password couldn\'t be updated.";
+                    return RedirectToAction("ViewUsers");//with error
                 }
 
             }
@@ -149,7 +166,8 @@ namespace Ropey_DvDs_Group_CW.Controllers
         {
             var user = await _userManager.FindByIdAsync(id);
             var result = _userManager.DeleteAsync(user);
-            return RedirectToAction(nameof(Index)); //show message
+            TempData["SuccessAlert"] = "User was Deleted Successfully";
+            return RedirectToAction("ViewUsers"); //show message
         }
 
         [Authorize(Roles = "Manager")]

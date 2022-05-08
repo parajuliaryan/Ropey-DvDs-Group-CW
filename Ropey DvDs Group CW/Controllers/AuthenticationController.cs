@@ -91,7 +91,8 @@ namespace Ropey_DvDs_Group_CW.Controllers
 
                 
             }
-            return RedirectToAction("UnauthorizedAccess");
+            TempData["DangerAlert"] = "Please provide correct credentials";
+            return RedirectToAction("Login");
         }
 
         // GET: Authentication/RegisterUser
